@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import SpringMy.Maven.Services.CommonServices;
@@ -45,7 +46,11 @@ public class UserLoginController {
 	public void setUser(UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}*/
-
+	
+	@RequestMapping("/")
+	 public ModelAndView getWelcomePage() throws IOException {	    		    		        	    	
+        return new ModelAndView("home"); 
+    } 
 	@RequestMapping("/getloginForm")
 		public String viewLogin(Map<String, Object> model) throws IOException {
 			Login loginForm = new Login();
