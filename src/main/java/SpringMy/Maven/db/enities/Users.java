@@ -76,7 +76,7 @@ public class Users implements java.io.Serializable{
 	}
 
 	
-	@Column(name = "first_name", nullable = false, length = 45)
+	@Column(name = "first_name", nullable = false, length = 200)
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -84,7 +84,7 @@ public class Users implements java.io.Serializable{
 		this.first_name = first_name;
 	}
 
-	@Column(name = "last_name", nullable = false, length = 45)
+	@Column(name = "last_name", nullable = false, length = 200)
 	public String getLast_name() {
 		return last_name;
 	}
@@ -92,7 +92,7 @@ public class Users implements java.io.Serializable{
 		this.last_name = last_name;
 	}
 
-	@Column(name = "gender", nullable = false, length = 45)	
+	@Column(name = "gender", nullable = false, length = 200)	
 	public String getGender() {
 		return gender;
 	}
@@ -100,7 +100,7 @@ public class Users implements java.io.Serializable{
 		this.gender = gender;
 	}
 
-	@Column(name = "address", nullable = false, length = 45)
+	@Column(name = "address", nullable = false, length = 500)
 	public String getAddress() {
 		return address;
 	}
@@ -108,7 +108,7 @@ public class Users implements java.io.Serializable{
 		this.address = address;
 	}
 
-	@Column(name = "city", nullable = false, length = 45)
+	@Column(name = "city", nullable = false, length = 200)
 	public String getCity() {
 		return city;
 	}
@@ -116,7 +116,7 @@ public class Users implements java.io.Serializable{
 		this.city = city;
 	}
 
-	@Column(name = "state", nullable = false, length = 45)
+	@Column(name = "state", nullable = false, length = 200)
 	public String getState() {
 		return state;
 	}
@@ -124,7 +124,7 @@ public class Users implements java.io.Serializable{
 		this.state = state;
 	}
 
-	@Column(name = "country", nullable = false, length = 45)
+	@Column(name = "country", nullable = false, length = 200)
 	public String getCountry() {
 		return country;
 	}
@@ -132,7 +132,7 @@ public class Users implements java.io.Serializable{
 		this.country = country;
 	}
 
-	@Column(name = "club", nullable = true, length = 45)
+	@Column(name = "club", nullable = true, length = 200)
 	public String getClub() {
 		return club;
 	}
@@ -140,7 +140,7 @@ public class Users implements java.io.Serializable{
 		this.club = club;
 	}
 
-	@Column(name = "honer", nullable = true, length = 45)
+	@Column(name = "honer", nullable = true, length = 200)
 	public String getHoner() {
 		return honer;
 	}
@@ -148,7 +148,7 @@ public class Users implements java.io.Serializable{
 		this.honer = honer;
 	}
 
-	@Column(name = "email", nullable = false, length = 45)
+	@Column(name = "email", nullable = false, length = 200)
 	public String getEmail() {
 		return email;
 	}
@@ -156,7 +156,7 @@ public class Users implements java.io.Serializable{
 		this.email = email;
 	}
 
-	@Column(name = "password", unique = true, nullable = false, length = 45)
+	@Column(name = "password", unique = false, nullable = false, length = 200)
 	public String getPassword() {
 		return password;
 	}

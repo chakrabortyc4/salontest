@@ -16,6 +16,7 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import SpringMy.Maven.db.enities.PayStatus;
 import SpringMy.Maven.db.enities.Users;
 
 
@@ -66,10 +67,11 @@ public class UsersDAO {
 	 
 	public Users findById(java.lang.Integer id) {
 		log.debug("getting User instance with id: " + id);
+		Users instance = new Users();
 		try{
 			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
-			Users instance = (Users) session.get("SpringMy.Maven.db.enities.Users", id);
+			 instance = (Users) session.get("SpringMy.Maven.db.enities.Users", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -80,7 +82,7 @@ public class UsersDAO {
 			log.error("get failed", re);
 			throw re;
 		   }
-		return null;
+		return instance;
 		
 	}
 	
@@ -117,6 +119,22 @@ public class UsersDAO {
 		return password;
 	}
 	
+	
+	public Users findByUserId(Integer usersId) {
+		log.debug("getting User instance with id: " + usersId);
+		try{
+			session = sessionFactory.openSession();
+			Criteria cr =session.createCriteria(Users.class)
+					     .add(Restrictions.eq("user_id", usersId));
+			Users Users = (Users) cr.uniqueResult();
+						
+			return Users;      		
+		   } catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		   }
+			
+	}
 	
 	public List findByExample(Users instance) {
 		log.debug("finding User instance by example");

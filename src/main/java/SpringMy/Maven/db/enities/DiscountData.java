@@ -100,6 +100,14 @@ public class DiscountData {
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "DiscountData [discountId=" + discountId + ", createdBY=" + createdBY + ", usrID=" + usrID
+				+ ", discountPersent=" + discountPersent + ", couponCode=" + couponCode + "]";
+	}
 	
 		
 

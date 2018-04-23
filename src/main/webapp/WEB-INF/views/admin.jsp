@@ -36,6 +36,12 @@ div.ex5 {
 div.ex6 {
     padding: 50px 100px 0px 90px;
 }
+
+
+.cellContainer {
+  width: 25%;
+  float: left;
+}
 </style>
 
  
@@ -67,7 +73,18 @@ div.ex6 {
     <li><a href="#">Contuct Us</a></li>
   </ul>
 </div>
-<div class="ex2"><div class="page-header"><h4></h4> </div></div>
+
+<div class="ex1">
+		<div class="well">
+			<h4>
+				<c:out value="${sucessMagssage}" />
+			</h4>
+			<div
+				style="float: right; font-size: 120%; position: relative; top: -10px">
+				<a href="<%=request.getContextPath()%>/logout"> Log Out </a>
+			</div>
+		</div>
+	</div>
 
 <div class="container">  
   <div class="panel-group">
@@ -79,6 +96,7 @@ div.ex6 {
       </div>
    <div id="collapse1" class="panel-collapse collapse">
 
+ <form:form  action="createCoupon" method="post" commandName="couponCode">
        <div class="row">
 	   
       <div class="col-sm-6">
@@ -95,22 +113,28 @@ div.ex6 {
 	   </div>
 	   </div>
 	   
-	   
+	  
 	   <div class="col-sm-6">
 	   <div class="ex3">
 	   <div class="form-group">
     		
-    		<div class="col-sm-10">
-    			<input type="text" class="form-control" id="Subject" name="Subject" placeholder="Enter perticipant id" required>
+    		<div class=style="margin-bottom: 25px" class="form-group col-md-12 redplaceholder">
+    			<input type="text" class="form-control" id="userId" name="userId" placeholder="Enter perticipant id" required="autofocus">
     		</div>
+    		 <div class="cellContainer"></div>
+    		 <div style="margin-bottom: 25px" class="form-group col-md-12 redplaceholder"> 
+             <input type="text" class="form-control" id="persent" name="persent" placeholder="Enter discount persent(%)" required="autofocus"/>                                        
+            </div>
+            
     	</div>
-		<div class="ex6"><button type="button" class="btn btn-success"> Submit </button></div>
+    	<div style="color: red"> ${couponCodeError} </div>
+		 <label class="btn btn-danger">Submit<input type="submit" id="creatrsinglecouponcode" style="display: none;" name="action" value="createSigle"  /></label>
 		<div class="ex5"></div>
 	   </div>
 	   </div>
 	   
        </div>  <!--end of row -->
-    
+        </form:form>
       </div>          
     </div>
   </div>

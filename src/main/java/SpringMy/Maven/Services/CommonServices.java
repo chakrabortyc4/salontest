@@ -44,13 +44,23 @@ public class CommonServices {
 		mailRecipientDTO.setRecipient(users.getEmail());
 		mailRecipientDTO.setMessage("Registration Sucess \nRegistration Id:"+users.getUser_id() +"\nUser Id: "+users.getEmail()+"\n Password: "+ users.getPassword()+" \n");
 		mailRecipientDTO.setSubject("Registration Success");		
-		commonUtil.doSendEmail(mailRecipientDTO);
-					
+		commonUtil.doSendEmail(mailRecipientDTO,null);
+	   				
 	}
+	
+	public void sendCreateCouponCodeMailforaUser(Users users, String couponCode, String bcc){
+		MailRecipientDTO mailRecipientDTO = new MailRecipientDTO();
+		mailRecipientDTO.setSender("salonechnchy@gmail.com");
+		mailRecipientDTO.setRecipient(users.getEmail());
+		mailRecipientDTO.setMessage("couponCode="+couponCode);
+		mailRecipientDTO.setSubject("Coupon Code Details");
+		
+		commonUtil.doSendEmail(mailRecipientDTO,bcc);
+	}  
 	
 	
  public void sendQueryEmail(MailRecipientDTO mailRecipientDTO){	 
-	 commonUtil.doSendEmail(mailRecipientDTO);
+	 commonUtil.doSendEmail(mailRecipientDTO,null);
     }
  
  public UserDTO createCurrentUserDTO(Users user, UserDTO userDTO){
@@ -63,6 +73,26 @@ public class CommonServices {
 	 userDTO.setEmail(user.getEmail());	 
 	 return userDTO;	 
    }
+ 
+ public boolean checkPersentInpout(String value) {
+	  String pattern = "(\\d{1,2})";
+	  if(value.matches(pattern))
+	     return true;
+	  else
+	       return false; 
+ }
+ 
+ public boolean checkNumberOnly(String value) {
+	 String regex = "\\d+";
+	 System.out.println(value.matches(regex));
+	 
+	return value.matches(regex);	 
+ }
+ 
+ public String createCouponCode(Integer id, String fName, String lName) {
+	 
+	 return (lName.substring(lName.length()-1,lName.length())+ fName.substring(fName.length()-1,fName.length())+"-"+id.toString().substring(1,4));	 
+ }
  
  public String saveFile(String directoryName, CommonsMultipartFile image){
 	 

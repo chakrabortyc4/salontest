@@ -32,6 +32,10 @@ public class WelcomeController {
 	@Autowired
 	SelectData selectData;
 	
+	@RequestMapping("/")
+	 public ModelAndView getWelcomePage() throws IOException {	    		    		        	    	
+	        return new ModelAndView("home"); 
+	    }  
 			
 	    @RequestMapping("/home")  
 	    public ModelAndView helloWorld() throws IOException {	    		    		        	    	

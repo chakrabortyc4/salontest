@@ -1,5 +1,7 @@
 package SpringMy.Maven.controller;
-
+/*
+ * Author Chandan Chakraborty
+ */
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -64,9 +66,9 @@ public class FileUploadController {
 
 			if (dbServices.saveFileData(fileDTO, userDTO)) { // check for same
 																// titel in same
-																// catagory
+				dbServices.updatePayStatusOfAUser(userDTO);											// catagory
 				commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
-
+				System.out.println("In upload page="+userDTO.toString()); 
 				String encodedString = new String(encoded);
 				model.addAttribute("image", encodedString);
 
@@ -88,8 +90,11 @@ public class FileUploadController {
 
 		} else if (action.equals("delete")) {
 			System.out.println("CatagoryName="+fileDTO.getCatagoryName()+" ,PositionName="+fileDTO.getPositionName());
+			model.addAttribute("sucessMagssage",
+					"WELCOME " + userDTO.getLastname().toUpperCase() + " " + userDTO.getFirstname().toUpperCase());
 			
 			FileDetail totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file 
+			dbServices.updatePayStatusOfAUser(userDTO);	
 			/*System.out.println("totalFileData=" + totalFileData.toString());
 			if (totalFileData.getFile() != null) {
 				commonServices.deleteFileFromDirectory(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName()

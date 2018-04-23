@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import SpringMy.Maven.Services.CommonServices;
 import SpringMy.Maven.Services.DbServices;
+import SpringMy.Maven.model.CouponCode;
 import SpringMy.Maven.model.DisplayFileDTO;
 import SpringMy.Maven.model.FileDTO;
 import SpringMy.Maven.model.Login;
@@ -54,7 +55,7 @@ public class UserLoginController {
 		  }
 		
 	@RequestMapping(value = "/loginSucess", method = RequestMethod.POST)
-	public String executeLogin(Model model, @ModelAttribute("loginForm") Login loginBean, HttpServletResponse response,
+	public String executeLogin( Model model, @ModelAttribute("loginForm") Login loginBean, HttpServletResponse response,
 			HttpServletRequest request) throws IOException {
 		System.out.println("GELO");
 
@@ -72,7 +73,7 @@ public class UserLoginController {
 						model.addAttribute("sucessMagssage", "WELCOME " + userDTO.getLastname().toUpperCase() + " "+ userDTO.getFirstname().toUpperCase());
 						model.addAttribute("product", new FileDTO());
 						model.addAttribute("paymentDetail", new PaymentDTO());
-												
+						System.out.println("In login page="+userDTO.toString());						
 						HashMap<String, LinkedList<DisplayFileDTO>> displayFileDTOMap = dbServices.getDisplayFileData(userDTO);
 
 						if (displayFileDTOMap.size() > 0) {
@@ -109,11 +110,12 @@ public class UserLoginController {
 						
 					return "registrationsuccess";
 				} else if ((dbServices.getUserData(loginBean).get(0).getRole()).equals("admin")) {
-					dbServices.updateCurrentTimeStamp(dbServices.getUserData(loginBean));
-					return "admin";// need to create admin page
-				} else {
-					return "registrationsuccess";// need to create judge page
-				}
+					        dbServices.updateCurrentTimeStamp(dbServices.getUserData(loginBean));
+					        model.addAttribute("sucessMagssage", "WELCOME " + userDTO.getLastname().toUpperCase() + " "+ userDTO.getFirstname().toUpperCase());					
+					        return "admin";// return to admin page
+				           } else {
+					                return "registrationsuccess";// need to create judge page
+				                  }
 
 			} else {
 				model.addAttribute("error", "Invalid Details");

@@ -114,14 +114,14 @@ div.ex5 {
 			   <div class="ex3">
 					<label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol1" /></label> 
 				    <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol1" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol1,titelcolour1" /></label> 
-				    <label class="btn btn-danger">Delete<input type="submit" id="deletecol1" style="display: none;" name="action" value="delete" onclick="deleteJob(event);" /></label>
+				    <label class="btn btn-danger">Delete<input type="submit" id="deletecol1" style="display: none;" name="action" value="delete"  /></label>
 					<!-- <button type="button" class="btn btn-danger"> Delete </button> -->
 			   </div>
 		 </div>
 
 		 <div class="col-sm-2">
 				               <!-- space for pto -->
-              <img alt="abc" id="col1img" style="float: left; width: 80px; height: 80px;" src="data:image/jpg;base64,<c:out value='${image_color1}'/>" />
+              <img alt=" " id="col1img" style="float: left; width: 80px; height: 80px;" src="data:image/jpg;base64,<c:out value='${image_color1}'/>" />
 	     </div>
 	    </form:form>
 
@@ -141,7 +141,7 @@ div.ex5 {
 			 <div class="ex3">
 				  <label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol2" /></label> 
 				  <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol2" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol2,titelcolour2" /></label> 
-				  <label class="btn btn-danger">Delete<input type="submit" id="deletecol2" style="display: none;" name="action" value="delete" onclick="deleteJob(event);" /></label>
+				  <label class="btn btn-danger">Delete<input type="submit" id="deletecol2" style="display: none;" name="action" value="delete"  /></label>
 			 </div>
 		</div>
 		                               <!-- space for pto -->
@@ -177,7 +177,7 @@ div.ex5 {
 			   <div class="ex3">
 					<label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol3" /></label> 
 				    <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol3" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol3,titelcolour3" /></label> 
-				    <label class="btn btn-danger">Delete<input type="submit" id="deletecol3" style="display: none;" name="action" value="delete" onclick="deleteJob(event);" /></label>
+				    <label class="btn btn-danger">Delete<input type="submit" id="deletecol3" style="display: none;" name="action" value="delete"  /></label>
 					<!-- <button type="button" class="btn btn-danger"> Delete </button> -->
 			   </div>
 		 </div>
@@ -204,7 +204,7 @@ div.ex5 {
 			 <div class="ex3">
 				  <label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol4" /></label> 
 				  <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol4" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol4,titelcolour4" /></label> 
-				  <label class="btn btn-danger">Delete<input type="submit" id="deletecol4" style="display: none;" name="action" value="delete" onclick="deleteJob(event);" /></label>
+				  <label class="btn btn-danger">Delete<input type="submit" id="deletecol4" style="display: none;" name="action" value="delete"  /></label>
 			 </div>
 		</div>
 		                               <!-- space for pto -->
