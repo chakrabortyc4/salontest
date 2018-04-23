@@ -48,10 +48,7 @@ public class UserLoginController {
 		this.userDTO = userDTO;
 	}*/
 	
-	@RequestMapping("/")
-	 public ModelAndView getWelcomePage() throws IOException {	    		    		        	    	
-        return new ModelAndView("home"); 
-    } 
+	
 	@RequestMapping("/getloginForm")
 		public String viewLogin(Map<String, Object> model) throws IOException {
 			Login loginForm = new Login();
