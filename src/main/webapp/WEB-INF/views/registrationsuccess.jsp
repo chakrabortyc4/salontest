@@ -19,6 +19,9 @@
 <script src="<c:url value="/resources/javaScript/utility.js" />"></script>
 <script
 	src="<c:url value="/resources/javaScript/dissableBackBotton.js" />"></script>
+	
+<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.11/uploadfile.css" rel="stylesheet">
+<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.11/jquery.uploadfile.min.js"></script>
 <style>
 div.ex1 {
 	padding: 50px 100px 0px 100px;
@@ -55,23 +58,6 @@ div.ex5 {
 		<p></p>
 	</div>
 
-	<!-- <div class="container">
-  <h4></h4>
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#">Home</a></li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Menu 1 <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="#">Submenu 1-1</a></li>
-        <li><a href="#">Submenu 1-2</a></li>                       
-      </ul>
-    </li>
-	<li><a href="#">Perticipate/Login</a></li>
-	<li><a href="#">Entry Status</a></li>
-	<li><a href="#">Download</a></li>   
-    <li><a href="#">Contuct Us</a></li>
-  </ul>
-</div> -->
 
 <script type="text/javascript">
 		var isDisabledAll = "${statue}";
@@ -100,55 +86,37 @@ div.ex5 {
 	
 	<div class="row">
 
-		 <form:form id="my_form" action="saveimage" method="post" enctype="multipart/form-data" commandName="product">
-		 <div class="col-sm-4">
+	    <div class="col-sm-4">
 			  <div class="ex2">
-				   <div class="col-sm-12" required autofocus>
-						<form:input path="titel" id="titelcolour1" class="form-control" placeholder="Enter Titel" value="${titel_color1}" />
-							  <script type="text/javascript"> var titelColor1 = "${titel_color1}";</script>
+				   <div class="col-sm-12">
+						<b>Title :</b><input id="titelcolour1" class="form-control" placeholder="Enter Title" value="${titel_color1}" />	  
 				   </div>
 			  </div>
-			   <form:input path="catagoryName" type="hidden" value="color" />
-			   <form:input path="positionName" type="hidden" value="color1" />
-
 			   <div class="ex3">
-					<label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol1" /></label> 
-				    <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol1" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol1,titelcolour1" /></label> 
-				    <label class="btn btn-danger">Delete<input type="submit" id="deletecol1" style="display: none;" name="action" value="delete"  /></label>
-					<!-- <button type="button" class="btn btn-danger"> Delete </button> -->
+			   <div id="upload_image_color1"></div>
 			   </div>
 		 </div>
 
 		 <div class="col-sm-2">
-				               <!-- space for pto -->
-              <img alt=" " id="col1img" style="float: left; width: 80px; height: 80px;" src="data:image/jpg;base64,<c:out value='${image_color1}'/>" />
+              <img alt=" " id="col1img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color1}'/>" />
 	     </div>
-	    </form:form>
 
 
-		
-		<form:form id="my_form" action="saveimage" method="post" enctype="multipart/form-data" commandName="product">
 		<div class="col-sm-4">
 		     <div class="ex2">
-				  <div class="col-sm-12" required autofocus>
-					   <form:input path="titel" id="titelcolour2" class="form-control" placeholder="Enter Titel" value="${titel_color2}" />
-							 <script type="text/javascript"> var titelColor2 = "${titel_color2}"; </script>
+				  <div class="col-sm-12">
+					   <b>Title :</b><input id="titelcolour2" class="form-control" placeholder="Enter Title" value="${titel_color2}" />
 				  </div>
 			 </div> 
-		     <form:input path="catagoryName" type="hidden" value="color" />
-			 <form:input path="positionName" type="hidden" value="color2" />
 				
 			 <div class="ex3">
-				  <label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol2" /></label> 
-				  <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol2" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol2,titelcolour2" /></label> 
-				  <label class="btn btn-danger">Delete<input type="submit" id="deletecol2" style="display: none;" name="action" value="delete"  /></label>
+				  <div id="upload_image_color2"></div>
 			 </div>
 		</div>
-		                               <!-- space for pto -->
+		                               
 		<div class="col-sm-2">
-			 <img alt=" " id="col2img" style="float: left; width: 80px; height: 80px;" src="data:image/jpg;base64,<c:out value='${image_color2}'/>" />
+			 <img alt=" " id="col2img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color2}'/>" />
 		</div>
-		</form:form>
 	</div>	
 				
 	<!-- End of row one of colour -->
@@ -163,56 +131,38 @@ div.ex5 {
 
 	<div class="row">
 
-		 <form:form id="my_form" action="saveimage" method="post" enctype="multipart/form-data" commandName="product">
-		 <div class="col-sm-4">
+	    <div class="col-sm-4">
 			  <div class="ex2">
-				   <div class="col-sm-12" required autofocus>
-						<form:input path="titel" id="titelcolour3" class="form-control" placeholder="Enter Titel" value="${titel_color3}" />
-							  <script type="text/javascript"> var titelColor3 = "${titel_color3}";</script>
+				   <div class="col-sm-12">
+						<b>Title :</b><input id="titelcolour3" class="form-control" placeholder="Enter Title" value="${titel_color3}" />	  
 				   </div>
 			  </div>
-			   <form:input path="catagoryName" type="hidden" value="color" />
-			   <form:input path="positionName" type="hidden" value="color3" />
-
 			   <div class="ex3">
-					<label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol3" /></label> 
-				    <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol3" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol3,titelcolour3" /></label> 
-				    <label class="btn btn-danger">Delete<input type="submit" id="deletecol3" style="display: none;" name="action" value="delete"  /></label>
-					<!-- <button type="button" class="btn btn-danger"> Delete </button> -->
+			   <div id="upload_image_color3"></div>
 			   </div>
 		 </div>
 
 		 <div class="col-sm-2">
-				               <!-- space for pto -->
-              <img alt="" id="col3img" style="float: left; width: 80px; height: 80px;" src="data:image/jpg;base64,<c:out value='${image_color3}'/>" />
+              <img alt=" " id="col3img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color3}'/>" />
 	     </div>
-	    </form:form>
 
 
-		
-		<form:form id="my_form" action="saveimage" method="post" enctype="multipart/form-data" commandName="product">
 		<div class="col-sm-4">
 		     <div class="ex2">
-				  <div class="col-sm-12" required autofocus>
-					   <form:input path="titel" id="titelcolour4" class="form-control" placeholder="Enter Titel" value="${titel_color4}" />
-							 <script type="text/javascript"> var titelColor4 = "${titel_color4}"; </script>
+				  <div class="col-sm-12">
+					   <b>Title :</b><input id="titelcolour4" class="form-control" placeholder="Enter Title" value="${titel_color4}" />
 				  </div>
 			 </div> 
-		     <form:input path="catagoryName" type="hidden" value="color" />
-			 <form:input path="positionName" type="hidden" value="color4" />
 				
 			 <div class="ex3">
-				  <label class="btn btn-default btn-file">Browse..<form:input type="file" path="images" style="display: none;" multiple="multiple" id="browsecol4" /></label> 
-				  <label class="btn btn btn-success">Upload<input type="submit" style="display: none;" name="action" value="save" id="uploadcol4" onclick="buttonSubmitClickedFileupload(event);" data-input-id="browsecol4,titelcolour4" /></label> 
-				  <label class="btn btn-danger">Delete<input type="submit" id="deletecol4" style="display: none;" name="action" value="delete"  /></label>
+				  <div id="upload_image_color4"></div>
 			 </div>
 		</div>
-		                               <!-- space for pto -->
+		                               
 		<div class="col-sm-2">
-			 <img alt=" " id="col4img" style="float: left; width: 80px; height: 80px;" src="data:image/jpg;base64,<c:out value='${image_color4}'/>" />
+			 <img alt=" " id="col4img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color4}'/>" />
 		</div>
-		</form:form>
-	</div>	
+	</div>		
 	
 	<!-- End of row tow -->
 	<!-- End of row colour -->
@@ -546,4 +496,98 @@ div.ex5 {
 
 
 </body>
+<script>
+$(document).ready(function()
+{
+	$("#upload_image_color1").uploadFile({
+	url:"saveimage",
+	multiple:false,
+	maxFileCount:1,
+	fileName:"images",
+	acceptFiles:"image/*",
+	showPreview:true,
+	previewHeight: "100px",
+	previewWidth: "100px",
+	allowedTypes:"jpg,jpeg",
+	formData: {"catagoryName":"color","positionName":"color1","action":"save"},
+	dynamicFormData: function()
+	{
+		var title = $('#titelcolour1').val();
+		return {"titel":title};
+	},
+	onSubmit:function(files)
+	{
+		var title = $('#titelcolour1').val();
+		if($.trim(title).length == 0){
+			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Enter Title");
+			$("#titelcolour1").focus();
+			return false;
+		}
+	}
+	});
+	
+	$("#upload_image_color2").uploadFile({
+		url:"saveimage",
+		multiple:false,
+		maxFileCount:1,
+		fileName:"images",
+		acceptFiles:"image/*",
+		showPreview:true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		allowedTypes:"jpg,jpeg",
+		formData: {"catagoryName":"color","positionName":"color2","action":"save"},
+		dynamicFormData: function()
+		{
+			var title = $('#titelcolour2').val();
+			return {"titel":title};
+		},
+		onSubmit:function(files)
+		{
+			var title = $('#titelcolour2').val();
+			if($.trim(title).length == 0){
+				$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Enter Title");
+				$("#titelcolour2").focus();
+				return false;
+			}
+		}
+		});
+	
+	$("#upload_image_color3").uploadFile({
+		url:"saveimage",
+		multiple:false,
+		maxFileCount:1,
+		fileName:"images",
+		acceptFiles:"image/*",
+		showPreview:true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		allowedTypes:"jpg,jpeg",
+		formData: {"catagoryName":"color","positionName":"color3","action":"save"},
+		dynamicFormData: function()
+		{
+			var title = $('#titelcolour3').val();
+			return {"titel":title};
+		}
+		});
+	
+	$("#upload_image_color4").uploadFile({
+		url:"saveimage",
+		multiple:false,
+		maxFileCount:1,
+		fileName:"images",
+		acceptFiles:"image/*",
+		showPreview:true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		allowedTypes:"jpg,jpeg",
+		formData: {"catagoryName":"color","positionName":"color4","action":"save"},
+		dynamicFormData: function()
+		{
+			var title = $('#titelcolour4').val();
+			return {"titel":title};
+		}
+		});
+});
+</script>
 </html>
