@@ -509,25 +509,18 @@ $(document).ready(function()
 	previewHeight: "100px",
 	previewWidth: "100px",
 	allowedTypes:"jpg,jpeg",
+	maxFileSize:20848820,
 	formData: {"catagoryName":"color","positionName":"color1","action":"save"},
 	dynamicFormData: function()
 	{
 		var title = $('#titelcolour1').val();
 		return {"titel":title};
-	},
-	onSubmit:function(files)
-	{
-		var title = $('#titelcolour1').val();
-		if($.trim(title).length == 0){
-			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Enter Title");
-			$("#titelcolour1").focus();
-			return false;
-		}
 	}
 	});
 	
 	$("#upload_image_color2").uploadFile({
-		url:"saveimage",
+		url:"json/saveimage",
+		method:"post",
 		multiple:false,
 		maxFileCount:1,
 		fileName:"images",
@@ -536,25 +529,17 @@ $(document).ready(function()
 		previewHeight: "100px",
 		previewWidth: "100px",
 		allowedTypes:"jpg,jpeg",
+		maxFileSize:20848820,
 		formData: {"catagoryName":"color","positionName":"color2","action":"save"},
 		dynamicFormData: function()
 		{
 			var title = $('#titelcolour2').val();
 			return {"titel":title};
-		},
-		onSubmit:function(files)
-		{
-			var title = $('#titelcolour2').val();
-			if($.trim(title).length == 0){
-				$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Enter Title");
-				$("#titelcolour2").focus();
-				return false;
-			}
 		}
 		});
 	
 	$("#upload_image_color3").uploadFile({
-		url:"saveimage",
+		url:"json/saveimage",
 		multiple:false,
 		maxFileCount:1,
 		fileName:"images",
@@ -563,6 +548,7 @@ $(document).ready(function()
 		previewHeight: "100px",
 		previewWidth: "100px",
 		allowedTypes:"jpg,jpeg",
+		maxFileSize:20848820,
 		formData: {"catagoryName":"color","positionName":"color3","action":"save"},
 		dynamicFormData: function()
 		{
@@ -572,7 +558,7 @@ $(document).ready(function()
 		});
 	
 	$("#upload_image_color4").uploadFile({
-		url:"saveimage",
+		url:"json/saveimage",
 		multiple:false,
 		maxFileCount:1,
 		fileName:"images",
@@ -581,6 +567,7 @@ $(document).ready(function()
 		previewHeight: "100px",
 		previewWidth: "100px",
 		allowedTypes:"jpg,jpeg",
+		maxFileSize:20848820,
 		formData: {"catagoryName":"color","positionName":"color4","action":"save"},
 		dynamicFormData: function()
 		{

@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -42,14 +44,10 @@ public class FileUploadController {
 	DbServices dbServices;
 	@Autowired
 	private CommonServices commonServices;
-	@Autowired
-	private ConfigProperty configProperty;
 		
 	
 	
-	public void setCommonService(CommonServices commonService) {
-		this.commonServices = commonService;
-	}
+	
 	
 	 @RequestMapping(value = "/saveimage")
      public String uploadResources(@RequestParam String action, HttpServletRequest servletRequest, HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
@@ -58,11 +56,7 @@ public class FileUploadController {
 		if (action.equals("save")) {
 			CommonsMultipartFile imagecm = fileDTO.getImages();
 			byte[] encoded = Base64.encodeBase64(imagecm.getBytes());
-			// if(!imagecm.isEmpty() && imagecm.getSize()>0 ){//check the
-			// multipart data
-
-			// if(imagecm.getSize()<configProperty.getMaxSize()){//check the
-			// maximum file size
+			
 
 			if (dbServices.saveFileData(fileDTO, userDTO)) { // check for same
 																// titel in same
@@ -78,15 +72,7 @@ public class FileUploadController {
 			} else
 				model.addAttribute("fileSizeError", "title should not be same on same catagory");
 
-			/*
-			 * } else model.addAttribute("fileSizeError","File size more then "
-			 * +(configProperty.getMaxSize().toString()).substring(0, 1) +"MB");
-			 */
-
-			/*
-			 * }else model.addAttribute("fileSizeError",
-			 * "Before upload choose a file");
-			 */
+		
 
 		} else if (action.equals("delete")) {
 			System.out.println("CatagoryName="+fileDTO.getCatagoryName()+" ,PositionName="+fileDTO.getPositionName());
@@ -95,13 +81,7 @@ public class FileUploadController {
 			
 			FileDetail totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file 
 			dbServices.updatePayStatusOfAUser(userDTO);	
-			/*System.out.println("totalFileData=" + totalFileData.toString());
-			if (totalFileData.getFile() != null) {
-				commonServices.deleteFileFromDirectory(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName()
-						+ File.separator + totalFileData.getOriginalFileName());//delete file from directory.
-				model.addAttribute("deleteMassage", "delete sucess");
-			} else
-				model.addAttribute("deleteMassage", "nothing to delete");*/
+			
 		}
 		
 		model.addAttribute("product", new FileDTO());
@@ -133,7 +113,26 @@ public class FileUploadController {
 	     }
 	
 	
-	 
+	 @RequestMapping(value = "/json/saveimage")
+     public @ResponseBody String uploadResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
+    		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
+    		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO,
+    		                                         @PathVariable String responce) throws IOException{
+		 
+		if (action.equals("save")) {
+			CommonsMultipartFile imagecm = fileDTO.getImages();
+			
+			if (dbServices.saveFileData(fileDTO, userDTO)) { // check for same
+																// titel in same
+				dbServices.updatePayStatusOfAUser(userDTO);											// catagory
+				commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
+				
+				
+			} else
+				   return "title should not be same on same catagory";
+				
+		}return "success";		
+	 }
 }
 
 
