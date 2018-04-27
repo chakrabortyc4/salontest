@@ -500,7 +500,7 @@ div.ex5 {
 $(document).ready(function()
 {
 	$("#upload_image_color1").uploadFile({
-	url:"saveimage",
+	url:"json/saveimage",
 	multiple:false,
 	maxFileCount:1,
 	fileName:"images",
@@ -515,6 +515,11 @@ $(document).ready(function()
 	{
 		var title = $('#titelcolour1').val();
 		return {"titel":title};
+	},
+	onSubmit:function(files)
+	{
+		$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+		//return false;
 	}
 	});
 	

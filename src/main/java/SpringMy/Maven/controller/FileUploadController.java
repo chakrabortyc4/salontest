@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +30,6 @@ import SpringMy.Maven.model.DisplayFileDTO;
 import SpringMy.Maven.model.FileDTO;
 import SpringMy.Maven.model.PaymentDTO;
 import SpringMy.Maven.model.UserDTO;
-import SpringMy.Maven.property.enities.ConfigProperty;
 
 @Controller
 @SessionAttributes("userForm")
@@ -58,9 +56,8 @@ public class FileUploadController {
 			byte[] encoded = Base64.encodeBase64(imagecm.getBytes());
 			
 
-			if (dbServices.saveFileData(fileDTO, userDTO)) { // check for same
-																// titel in same
-				dbServices.updatePayStatusOfAUser(userDTO);											// catagory
+			if (dbServices.saveFileData(fileDTO, userDTO)) { 
+				dbServices.updatePayStatusOfAUser(userDTO);											
 				commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
 				System.out.println("In upload page="+userDTO.toString()); 
 				String encodedString = new String(encoded);
@@ -97,8 +94,6 @@ public class FileUploadController {
                 	 String encodedString = new String(encoded);
                 	 model.addAttribute("image_"+dfdto.getPosition(), encodedString);
                 	 model.addAttribute("titel_"+dfdto.getPosition(), dfdto.getTitel());
-                	 //System.out.println("image_"+dfdto.getPosition()+ "    "+"titel_"+dfdto.getPosition()+"  "+dfdto.getTitel());
-               	     
                     }
 			}
 						
@@ -116,22 +111,19 @@ public class FileUploadController {
 	 @RequestMapping(value = "/json/saveimage")
      public @ResponseBody String uploadResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
     		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
-    		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO,
-    		                                         @PathVariable String responce) throws IOException{
+    		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
 		 
 		if (action.equals("save")) {
 			CommonsMultipartFile imagecm = fileDTO.getImages();
 			
-			if (dbServices.saveFileData(fileDTO, userDTO)) { // check for same
-																// titel in same
-				dbServices.updatePayStatusOfAUser(userDTO);											// catagory
+			if (dbServices.saveFileData(fileDTO, userDTO)) { 
+				dbServices.updatePayStatusOfAUser(userDTO);											
 				commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
-				
 				
 			} else
 				   return "title should not be same on same catagory";
 				
-		}return "success";		
+		}return "file upload is successful";		
 	 }
 }
 
