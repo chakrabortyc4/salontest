@@ -61,8 +61,8 @@ $(document).ready(function(){
     </li>
 	<li><a href="getloginForm">Perticipate/Login</a></li>
 	<li><a href="gettableForm">Entry Status</a></li>
-	<li><a href="#">Download</a></li>   
-    <li><a href="final-contactus.html">Contuct Us</a></li>
+	<li><a href="getDownload">Download</a></li>   
+    <li><a href="getContuctUs">Contuct Us</a></li>
   </ul>
 </div>
    

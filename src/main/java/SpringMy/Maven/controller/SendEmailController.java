@@ -22,7 +22,7 @@ public class SendEmailController {
 		this.commonServices = commonServices;
 	}
 
-	@RequestMapping("/contuctUs" )
+	@RequestMapping("/getContuctUs" )
     public String fetchEmailForm() {	
 	   return "emailForm";		
 	}

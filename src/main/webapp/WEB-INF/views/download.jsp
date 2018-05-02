@@ -48,9 +48,25 @@ div.ex3 {
 	<li><a href="getloginForm">Perticipate/Login</a></li>
 	<li><a href="getUserTable">Entry Status</a></li>
 	<li><a href="getDownload">Download</a></li>   
-    <li><a href="getContuctUs">Contuct Us</a></li>
+    <li><a href="final-contactus.html">Contuct Us</a></li>
   </ul>
 </div>
+  
+  
+  <div class="form-container">
+       <!--  <h1>Welcome to FileDownloader Example</h1>
+         
+        Click on below links to see FileDownload in action.<br/><br/>
+          -->
+         
+       <%--  <a href="<c:url value='/download/internal' />">Download This File (located inside project)</a>  
+        <br/>
+        <a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a> --%>
+        
+     <!--    <img src="/testsal/imageDisplay?id=1"/> -->
+         
+    </div> 
+  
   
 </body>
 </html>
