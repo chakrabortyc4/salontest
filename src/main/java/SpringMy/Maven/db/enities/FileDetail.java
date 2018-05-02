@@ -26,11 +26,14 @@ public class FileDetail implements java.io.Serializable {
 	private Date upload_time;
 	private Category category;
 	private String originalFileName;
+	private String categoryIndex;
+
+	
 
 	public FileDetail() {
 	}
 
-	public FileDetail(int fileId, Category category, Users users, String titel, byte[] file, Date upload_time, String originalFileName) {
+	public FileDetail(int fileId, Category category, Users users, String titel, byte[] file, Date upload_time, String originalFileName,String categoryIndex) {
 		this.fileId = fileId;
 		this.category = category;
 		this.users = users;
@@ -38,6 +41,7 @@ public class FileDetail implements java.io.Serializable {
 		this.file = file;
 		this.upload_time= upload_time;
 		this.originalFileName=originalFileName;
+		this.categoryIndex = categoryIndex;
 	}
 
 	@Id
@@ -70,7 +74,7 @@ public class FileDetail implements java.io.Serializable {
 		this.users = users;
 	}
 
-	@Column(name = "titel", nullable = false, length = 45)
+	@Column(name = "titel", nullable = false, length = 200)
 	public String getTitel() {
 		return this.titel;
 	}
@@ -79,7 +83,7 @@ public class FileDetail implements java.io.Serializable {
 		this.titel = titel;
 	}
 
-	@Column(name = "original_file_name", nullable = false, length = 45)
+	@Column(name = "original_file_name", nullable = false, length = 200)
 	public String getOriginalFileName() {
 		return originalFileName;
 	}
@@ -107,13 +111,21 @@ public class FileDetail implements java.io.Serializable {
 		this.upload_time = upload_time;
 	}
 
+	@Column(name = "category_index", nullable = false, length = 45)
+	public String getCategoryIndex() {
+		return categoryIndex;
+	}
+
+	public void setCategoryIndex(String categoryIndex) {
+		this.categoryIndex = categoryIndex;
+	}
+
 	@Override
 	public String toString() {
 		return "FileDetail [fileId=" + fileId + ", users=" + users + ", titel=" + titel + ", file="
 				+ Arrays.toString(file) + ", upload_time=" + upload_time + ", category=" + category
-				+ ", originalFileName=" + originalFileName + "]";
+				+ ", originalFileName=" + originalFileName + ", categoryIndex=" + categoryIndex + "]";
 	}
-	
 	
 	
 

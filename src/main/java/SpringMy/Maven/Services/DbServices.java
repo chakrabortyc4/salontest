@@ -21,6 +21,7 @@ import SpringMy.Maven.db.enities.FileDetail;
 import SpringMy.Maven.db.enities.PayStatus;
 import SpringMy.Maven.db.enities.Users;
 import SpringMy.Maven.model.CategoryCountMap;
+import SpringMy.Maven.model.ClubDTO;
 import SpringMy.Maven.model.DisplayFileDTO;
 import SpringMy.Maven.model.FileDTO;
 import SpringMy.Maven.model.GetPassword;
@@ -162,14 +163,15 @@ public class DbServices {
 		      fileDetail.setUsers(user);
 		      fileDetail.setTitel(fileDTO.getTitel());
 		      fileDetail.setFile(fileDTO.getImages().getBytes());
-		      fileDetail.setOriginalFileName(fileDTO.getPositionName()+"_"+fileDTO.getImages().getOriginalFilename());
+		      //fileDetail.setOriginalFileName(fileDTO.getPositionName()+"_"+fileDTO.getImages().getOriginalFilename());
+		      fileDetail.setCategoryIndex(fileDTO.getPositionName());
+		      fileDetail.setOriginalFileName(fileDTO.getImages().getOriginalFilename());
 		      fileDetail.setUpload_time(commonUtil.sqlDateTime());
 		      fileDetail.setCategory(catagory);
 		      //save file
 		      List<String> listOfTitel = fileDetailDAO.findTitelListOfaCatagory(fileDetail);
 		      System.out.println("listOfTitel=================================="+listOfTitel);
-		      if(listOfTitel.size()==0){
-		    	  
+		      if(listOfTitel.size()==0){		    	  
 		    	  System.out.println("Save file data="+fileDetail.toString());
 		    	  fileDetailDAO.persist(fileDetail);
 		    	  return true;
@@ -198,7 +200,7 @@ public class DbServices {
 		 // Create file object from file DTO
 		 fileDetail.setUsers(user);		 
 		 fileDetail.setCategory(catagory);
-		 fileDetail.setOriginalFileName(fileDTO.getPositionName()+"%");
+		 fileDetail.setCategoryIndex(fileDTO.getPositionName());
 		
 		 FileDetail file1 = fileDetailDAO.findFile(fileDetail);
 		 if(file1!=null){			 			 
@@ -227,7 +229,8 @@ public class DbServices {
 		    		displayFileDTO.setItemImage(f.getFile());
 		    		displayFileDTO.setTime(f.getUpload_time().toString());
 		    		displayFileDTO.setTitel(f.getTitel());	
-		    		displayFileDTO.setPosition(f.getOriginalFileName().substring(0, f.getOriginalFileName().indexOf("_")));
+		    		//displayFileDTO.setPosition(f.getOriginalFileName().substring(0, f.getOriginalFileName().indexOf("_")));
+		    		displayFileDTO.setPosition(f.getCategoryIndex());
 		    		LinkedList<DisplayFileDTO>  l =hm.get(f.getCategory().getCategoryName());
 		    		l.add(displayFileDTO);
 		    		hm.put(f.getCategory().getCategoryName(), l);
@@ -238,7 +241,8 @@ public class DbServices {
 		    		  displayFileDTO.setItemImage(f.getFile());
 		    		  displayFileDTO.setTime(f.getUpload_time().toString());
 		    		  displayFileDTO.setTitel(f.getTitel());
-		    		  displayFileDTO.setPosition(f.getOriginalFileName().substring(0, f.getOriginalFileName().indexOf("_")));
+		    		  //displayFileDTO.setPosition(f.getOriginalFileName().substring(0, f.getOriginalFileName().indexOf("_")));
+		    		  displayFileDTO.setPosition(f.getCategoryIndex());
 		    		  l.add(displayFileDTO);
 		    		  hm.put(f.getCategory().getCategoryName(), l);
 		    	    }
@@ -403,7 +407,7 @@ public void updatePayStatusforNonZeroEntry(PayStatus payStatus, List<CategoryCou
 	return password;	  
   }
   
-  public String createCouponeCode(String userId, String persent,Integer createorUserId,String adminEmail) {
+  public String createSingleCouponeCode(String userId, String persent,Integer createorUserId,String adminEmail) {
 	  
 	  Users user = new Users();
 	  user.setUser_id(Integer.parseInt(userId));
@@ -435,6 +439,39 @@ public void updatePayStatusforNonZeroEntry(PayStatus payStatus, List<CategoryCou
   }
   
  
+  public void createClubCouponeCode(String clubName,String persent,Integer createorUserId,String adminEmail) {
+	  Users user = new Users();
+	  user.setClub(clubName);
+	  List<Users> usersList=usersDAO.findByExample(user);
+	  List<String> getUserIdofCreatedCouponCode = getUserIdofCreatedCouponCode("usrID");
+	  for(Users u : usersList) {
+		  DiscountData discountData = new DiscountData();
+		  String couponcode= commonService.createCouponCode(u.getUser_id(),u.getFirst_name(),u.getLast_name());
+		  discountData.setCouponCode(couponcode);
+	      discountData.setUsrID(u.getUser_id());
+	      discountData.setDiscountPersent(Integer.parseInt(persent));
+	      discountData.setCreatedBY(createorUserId);
+	      
+	      if(getUserIdofCreatedCouponCode.contains(Integer.toString(u.getUser_id()))) {
+	    	  System.out.println("in if ");
+	    	  DiscountData discountData_exist = new DiscountData();
+	    	  discountData_exist.setUsrID(u.getUser_id());
+	    	  List<DiscountData> DiscountData_existList =discountDataDAO.findByExample(discountData_exist);
+	    	  discountData.setDiscountId(DiscountData_existList.get(0).getDiscountId());
+	          discountDataDAO.attachDirty(discountData);
+	         //commonService.sendCreateCouponCodeMailforaUser(u,couponcode,adminEmail);
+	        }
+	      else {
+	    	     System.out.println("in if ");
+	    	     discountDataDAO.persist(discountData);
+		         //commonService.sendCreateCouponCodeMailforaUser(u,couponcode,adminEmail);
+	           }
+	        
+	  }
+	  
+  }
+  
+  
   public List<String> getUserIdofCreatedCouponCode(String columnName) {
 	  	  
 	  List<DiscountData> discountDataList = discountDataDAO.findAColumn(columnName);
@@ -443,13 +480,29 @@ public void updatePayStatusforNonZeroEntry(PayStatus payStatus, List<CategoryCou
 	     for(DiscountData dd : discountDataList ) {
 	    	 existingCouponCodeList.add(dd.getUsrID().toString());
 	        }
-	    }  
-	  
+	    }  	  
 	  System.out.println("existingCouponCodeList="+existingCouponCodeList);
 	 return existingCouponCodeList;
 	  
   }
   
+  
+  public List<ClubDTO> getClubData(){
+	  
+	  String sql ="SELECT club, count(user_id) members_count FROM salontest.users where role!='admin' group by club";
+	  List<ClubDTO> clubList =usersDAO.fetchSql(sql);	  
+	  return clubList;	  
+  }
+  
+  
+  public FileDetail getImageData(Integer imageId){
+	  
+	  FileDetail fileDetail = new FileDetail();
+	  fileDetail.setFileId(imageId);	  
+	  List<FileDetail> fileDetailList =fileDetailDAO.findByExample(fileDetail);	  
+	  return fileDetailList.get(0);
+	  
+  }
   
   
 }

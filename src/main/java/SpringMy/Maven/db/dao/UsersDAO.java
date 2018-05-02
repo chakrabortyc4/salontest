@@ -1,5 +1,6 @@
 package SpringMy.Maven.db.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,11 +14,14 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import SpringMy.Maven.db.enities.PayStatus;
 import SpringMy.Maven.db.enities.Users;
+import SpringMy.Maven.model.CategoryCountMap;
+import SpringMy.Maven.model.ClubDTO;
 
 
 @Repository
@@ -149,6 +153,31 @@ public class UsersDAO {
 			return results;
 		} catch (RuntimeException re) {
 			log.error("find by example failed", re);
+			throw re;
+		}
+	}
+
+	public List<ClubDTO> fetchSql(String sql) {
+		try {
+			Session session = sessionFactory.openSession();
+			Transaction transaction = session.beginTransaction();
+			
+			@SuppressWarnings("unchecked")
+			List<ClubDTO> results = session.createSQLQuery(sql)
+					                         .addScalar("members_count", StandardBasicTypes.INTEGER)
+					                         .addScalar("club", StandardBasicTypes.STRING)
+					                         .setResultTransformer( Transformers.aliasToBean(ClubDTO.class))
+											 .list();
+			 transaction.commit();
+			 session.close();
+			 
+			 System.out.println("results.size="+results.size());
+			if(results.size()>0)
+			   return results;
+			else
+				return new ArrayList<ClubDTO>();
+		}catch (RuntimeException re) {
+			log.error("finding Category Wise FileCount of a User", re);
 			throw re;
 		}
 	}

@@ -3,6 +3,7 @@ package SpringMy.Maven.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import SpringMy.Maven.Services.CommonServices;
 import SpringMy.Maven.Services.DbServices;
+import SpringMy.Maven.Utility.SelectData;
+import SpringMy.Maven.model.ClubDTO;
+import SpringMy.Maven.model.CouponCode;
 import SpringMy.Maven.model.DisplayFileDTO;
 import SpringMy.Maven.model.FileDTO;
 import SpringMy.Maven.model.Login;
@@ -29,7 +33,7 @@ import SpringMy.Maven.model.UserDTO;
 
 
 @Controller 
-@SessionAttributes("userForm")
+@SessionAttributes({"userForm","clubDataList"})
 @EnableWebMvc
 public class UserLoginController {
 	
@@ -37,12 +41,9 @@ public class UserLoginController {
 	CommonServices 	commonServices;
 	@Autowired
 	private DbServices dbServices;
-	/*@Autowired
-	private UserDTO userDTO;
+	@Autowired
+	SelectData selectData;
 	
-	public void setUser(UserDTO userDTO) {
-		this.userDTO = userDTO;
-	}*/
 	
 	
 	@RequestMapping("/getloginForm")
@@ -83,7 +84,7 @@ public class UserLoginController {
                                 	 String encodedString = new String(encoded);
                                 	 model.addAttribute("image_"+dfdto.getPosition(), encodedString);
                                 	 model.addAttribute("titel_"+dfdto.getPosition(), dfdto.getTitel());
-                                	 System.out.println("image_"+dfdto.getPosition()+ "    "+"titel_"+dfdto.getPosition()+"  "+dfdto.getTitel());                               	     
+                                	 //System.out.println("image_"+dfdto.getPosition()+ "    "+"titel_"+dfdto.getPosition()+"  "+dfdto.getTitel());                               	     
                                     }                                
 							     }							
 							model.addAttribute("size",displayFileDTOMap.size());
@@ -108,10 +109,18 @@ public class UserLoginController {
 						
 					return "registrationsuccess";
 				} else if ((dbServices.getUserData(loginBean).get(0).getRole()).equals("admin")) {
-					        dbServices.updateCurrentTimeStamp(dbServices.getUserData(loginBean));
-					        model.addAttribute("sucessMagssage", "WELCOME " + userDTO.getLastname().toUpperCase() + " "+ userDTO.getFirstname().toUpperCase());					
-					        return "admin";// return to admin page
-				           } else {
+			        CouponCode couponCode =new CouponCode();
+			        model.addAttribute("couponCode", couponCode);
+			        dbServices.updateCurrentTimeStamp(dbServices.getUserData(loginBean));
+			        model.addAttribute("sucessMagssage", "WELCOME " + userDTO.getLastname().toUpperCase() + " "+ userDTO.getFirstname().toUpperCase());
+			       
+			          List<ClubDTO> clubDTOData =dbServices.getClubData();
+			        
+			          List<String> clubDataList = selectData.clubData(clubDTOData);
+			          model.addAttribute("clubDataList", clubDataList);					     
+			        	    
+			        return "admin";// return to admin page
+		           } else {
 					                return "registrationsuccess";// need to create judge page
 				                  }
 

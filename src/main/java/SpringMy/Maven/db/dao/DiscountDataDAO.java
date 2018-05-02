@@ -81,6 +81,13 @@ public class DiscountDataDAO {
 				                               throw re;
 			                                  }		
 		 }
+
+
+
+	public void attachDirty(DiscountData discountData) {
+		// TODO Auto-generated method stub
+		
+	}
 	 
 	 
 }

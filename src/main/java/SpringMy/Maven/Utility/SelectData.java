@@ -3,6 +3,8 @@ package SpringMy.Maven.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import SpringMy.Maven.model.ClubDTO;
+
 public class SelectData {
 	
 	
@@ -272,5 +274,17 @@ public class SelectData {
 		return countryList;
 		
 	}
+   
+   public List<String> clubData(List<ClubDTO> clubList){	   
+	   List<String> clubData = new ArrayList<String>(); 
+	   
+	   System.out.println("clubList="+clubList);
+	   clubData.add(0, "  Select Club  ");
+	   if( clubList!=null) {
+	   for(ClubDTO c : clubList) 
+		   clubData.add(c.getClub()+" >> "+c.getMembers_count()+" Members");	
+	      }
+	   return clubData;		   
+   }
 
 }

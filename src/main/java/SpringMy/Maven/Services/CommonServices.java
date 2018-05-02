@@ -91,7 +91,7 @@ public class CommonServices {
  
  public String createCouponCode(Integer id, String fName, String lName) {
 	 
-	 return (lName.substring(lName.length()-1,lName.length())+ fName.substring(fName.length()-1,fName.length())+"-"+id.toString().substring(1,4));	 
+	 return (lName.substring(lName.length()-1,lName.length())+ fName.substring(fName.length()-1,fName.length())+"-"+id.toString().substring(1,6));	 
  }
  
  public String saveFile(String directoryName, CommonsMultipartFile image){

@@ -95,25 +95,26 @@ div.ex6 {
         </h4>
       </div>
    <div id="collapse1" class="panel-collapse collapse">
-
+  <div class="row">
  <form:form  action="createCoupon" method="post" commandName="couponCode">
-       <div class="row">
+       
 	   
       <div class="col-sm-6">
 	   <div class="ex3">	  
-      <select class="form-control" id="sel1">
-        <option>select club name</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
-		
-		<div class="ex6"><button type="button" class="btn btn-success"> Submit </button></div>
+       <form:select class="form-control" path="clubData" items="${clubDataList}" />
+       
+        
+             <input type="text" class="form-control" id="persent" name="persent" placeholder="Enter discount persent(%)" required="autofocus"/>                                        
+            
+		<div style="color: red"> ${clubcouponCodeError} </div>
+		<div class="ex6">
+		<label class="btn btn-danger">Submit<input type="submit" id="creatrColubcouponcode" style="display: none;" name="action" value="createClubCoupon"  /></label>
+		</div>
 		<div class="ex5"></div>
 	   </div>
 	   </div>
-	   
-	  
+	   </form:form>
+	  <form:form  action="createCoupon" method="post" commandName="couponCode">
 	   <div class="col-sm-6">
 	   <div class="ex3">
 	   <div class="form-group">
@@ -133,8 +134,9 @@ div.ex6 {
 	   </div>
 	   </div>
 	   
-       </div>  <!--end of row -->
+         <!--end of row -->
         </form:form>
+        </div>
       </div>          
     </div>
   </div>
