@@ -379,7 +379,7 @@ public void updatePayStatusforNonZeroEntry(PayStatus payStatus, List<CategoryCou
 	  
 	  String sql ="SELECT ps.user_id, usr.first_name, usr.last_name, usr.club, usr.country,ps.attempt_section, ps.total_entry, ps.paying_status "+
 	              "FROM salontest.pay_status ps, salontest.users usr "+ 
-			       "where ps.user_id=usr.user_id"; 
+			      "where ps.user_id=usr.user_id and attempt_section > 0"; 
 	  
 	  List<UserStatusDisplayDTO> userStatusDisplayDTOList = payStatusDAO.fetchSql(sql);
 	  

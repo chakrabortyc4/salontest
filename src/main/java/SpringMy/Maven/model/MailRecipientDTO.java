@@ -48,6 +48,13 @@ public class MailRecipientDTO {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+
+	@Override
+	public String toString() {
+		return "MailRecipientDTO [sender=" + sender + ", recipient=" + recipient + ", subject=" + subject + ", message="
+				+ message + "]";
+	}
 	
 
 	

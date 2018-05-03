@@ -24,7 +24,7 @@ import SpringMy.Maven.model.Login;
 
 public class FileDownloadController {
 	
-	private static final String EXTERNAL_FILE_PATH="C:/mytemp/irregular-verbs-list.pdf";
+	private static final String EXTERNAL_FILE_PATH="D:\\test\\PAYMENT.pdf";
 	//private static final String INTERNAL_FILE="irregular-verbs-list.pdf";
 	
 	

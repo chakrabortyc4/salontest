@@ -60,6 +60,8 @@ public class CommonServices {
 	
 	
  public void sendQueryEmail(MailRecipientDTO mailRecipientDTO){	 
+	 mailRecipientDTO.setRecipient("salonechnchy@gmail.com");
+	 
 	 commonUtil.doSendEmail(mailRecipientDTO,null);
     }
  

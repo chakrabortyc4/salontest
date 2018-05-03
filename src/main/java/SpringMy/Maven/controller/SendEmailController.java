@@ -1,5 +1,7 @@
 package SpringMy.Maven.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +25,18 @@ public class SendEmailController {
 	}
 
 	@RequestMapping("/getContuctUs" )
-    public String fetchEmailForm() {	
+    public String fetchEmailForm(Map<String, Object> model) {
+		MailRecipientDTO mailRecipientform = new MailRecipientDTO();
+		model.put("mailRecipientform", mailRecipientform);
 	   return "emailForm";		
 	}
 	
-	@RequestMapping(value="processmail", method = RequestMethod.POST)
-    public String doSendEmail(@ModelAttribute("sendEmailForm") MailRecipientDTO mailRecipientDTO,Model model) {
-		   mailRecipientDTO.setRecipient("salonechnchy@gmail.com");			
-		   commonServices.sendQueryEmail(mailRecipientDTO);
-	       return "mailSendSuccess";
+	
+	@RequestMapping(value="/processmail", method = RequestMethod.POST)
+    public String doSendEmail(@ModelAttribute("sendEmailForm") MailRecipientDTO mailRecipientDTO,Model model) {		  
+		   System.out.println(mailRecipientDTO.toString());
+		   //commonServices.sendQueryEmail(mailRecipientDTO);
+		   model.addAttribute("massage","mail send succesful");
+	       return "emailForm";
 	    }		
 }
