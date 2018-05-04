@@ -125,6 +125,20 @@ public class FileUploadController {
 				
 		}return "file upload is successful";		
 	 }
+	 
+	 @RequestMapping(value = "/json/deleteimage")
+     public @ResponseBody FileDetail deleteResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
+    		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
+    		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
+		 FileDetail totalFileData = null;
+		 if (action.equals("delete")) {
+				totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file 
+				dbServices.updatePayStatusOfAUser(userDTO);	
+				
+			}
+		 
+		return totalFileData;		
+	 }
 }
 
 

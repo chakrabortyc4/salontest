@@ -89,11 +89,19 @@ div.ex5 {
 	    <div class="col-sm-4">
 			  <div class="ex2">
 				   <div class="col-sm-12">
-						<b>Title :</b><input id="titelcolour1" class="form-control" placeholder="Enter Title" value="${titel_color1}" />	  
+						<b>Title :</b><input id="titelcolour1" class="form-control" placeholder="Enter Title" value="${titel_color1}" 
+						<c:if test="${not empty titel_color1 }">disabled="disabled"</c:if> />	  
 				   </div>
 			  </div>
 			   <div class="ex3">
-			   <div id="upload_image_color1"></div>
+			   <c:choose>
+					<c:when test="${empty titel_color1}">
+				    <div id="upload_image_color1"></div>
+				    </c:when>
+					<c:otherwise>
+				        <button type="button" class="btn btn-danger">Delete</button>
+				    </c:otherwise>
+				</c:choose>
 			   </div>
 		 </div>
 
@@ -105,12 +113,20 @@ div.ex5 {
 		<div class="col-sm-4">
 		     <div class="ex2">
 				  <div class="col-sm-12">
-					   <b>Title :</b><input id="titelcolour2" class="form-control" placeholder="Enter Title" value="${titel_color2}" />
+					   <b>Title :</b><input id="titelcolour2" class="form-control" placeholder="Enter Title" value="${titel_color2}"
+					   <c:if test="${not empty titel_color2 }">disabled="disabled"</c:if> />
 				  </div>
 			 </div> 
 				
 			 <div class="ex3">
-				  <div id="upload_image_color2"></div>
+			  <c:choose>
+					<c:when test="${empty titel_color2}">
+				     <div id="upload_image_color2"></div>
+				    </c:when>
+					<c:otherwise>
+				        <button type="button" class="btn btn-danger">Delete</button>
+				    </c:otherwise>
+				</c:choose>
 			 </div>
 		</div>
 		                               
@@ -134,11 +150,19 @@ div.ex5 {
 	    <div class="col-sm-4">
 			  <div class="ex2">
 				   <div class="col-sm-12">
-						<b>Title :</b><input id="titelcolour3" class="form-control" placeholder="Enter Title" value="${titel_color3}" />	  
+						<b>Title :</b><input id="titelcolour3" class="form-control" placeholder="Enter Title" value="${titel_color3}" 
+						<c:if test="${not empty titel_color3 }">disabled="disabled"</c:if>/>	  
 				   </div>
 			  </div>
 			   <div class="ex3">
-			   <div id="upload_image_color3"></div>
+			   <c:choose>
+					<c:when test="${empty titel_color3}">
+				    <div id="upload_image_color3"></div>
+				    </c:when>
+					<c:otherwise>
+				        <button type="button" class="btn btn-danger">Delete</button>
+				    </c:otherwise>
+				</c:choose>
 			   </div>
 		 </div>
 
@@ -150,12 +174,20 @@ div.ex5 {
 		<div class="col-sm-4">
 		     <div class="ex2">
 				  <div class="col-sm-12">
-					   <b>Title :</b><input id="titelcolour4" class="form-control" placeholder="Enter Title" value="${titel_color4}" />
+					   <b>Title :</b><input id="titelcolour4" class="form-control" placeholder="Enter Title" value="${titel_color4}" 
+					   <c:if test="${not empty titel_color4 }">disabled="disabled"</c:if>/>
 				  </div>
 			 </div> 
 				
 			 <div class="ex3">
-				  <div id="upload_image_color4"></div>
+				<c:choose>
+					<c:when test="${empty titel_color4}">
+				      <div id="upload_image_color4"></div>
+				    </c:when>
+					<c:otherwise>
+				        <button type="button" class="btn btn-danger">Delete</button>
+				    </c:otherwise>
+				</c:choose>
 			 </div>
 		</div>
 		                               
@@ -580,6 +612,8 @@ $(document).ready(function()
 			return {"titel":title};
 		}
 		});
+	//delete button ajax call
+	
 });
 </script>
 </html>
