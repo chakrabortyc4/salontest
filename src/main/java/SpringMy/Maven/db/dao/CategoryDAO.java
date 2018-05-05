@@ -35,7 +35,7 @@ public class CategoryDAO {
 		                     
 		   Integer id = (Integer) criteria.list().get(0);            
 		   		   
-		   System.out.println("value="+id); 
+		   System.out.println("value of Category="+id); 
 		   
 		   session.close();                 
 		   return id;

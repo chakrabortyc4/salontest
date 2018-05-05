@@ -99,7 +99,7 @@ div.ex5 {
 				    <div id="upload_image_color1"></div>
 				    </c:when>
 					<c:otherwise>
-				        <button type="button" class="btn btn-danger">Delete</button>
+				        <button type="button" id="delete_image_color1" class="btn btn-danger">Delete</button>
 				    </c:otherwise>
 				</c:choose>
 			   </div>
@@ -612,7 +612,21 @@ $(document).ready(function()
 			return {"titel":title};
 		}
 		});
+	
 	//delete button ajax call
+	 $("#delete_image_color1").click(function(){
+	        $.ajax({url: "json/deleteimage", 
+	        	data: {"catagoryName":"color","positionName":"color1","action":"delete"},
+	        	  beforeSend: function(request) {
+	        	    request.setRequestHeader("Content-Type", "application/json");
+	        	    request.setRequestHeader("Accept", "application/json");
+	        	  },
+	        	success: function(result){
+	           // $("#div1").html(result);
+	           console.log(result);
+	        }});
+	    });
+	
 	
 });
 </script>

@@ -52,7 +52,8 @@ public class FileDetailDAO {
 	 
 	 
 	 public void delete(FileDetail persistentInstance) {
-		      // System.out.println("check data====="+persistentInstance.getUsers().getUser_id()+"    " +persistentInstance.getCategory().getCategoryId()+"  "+persistentInstance.getTitel() );
+		     
+		 System.out.println("file1="+persistentInstance.toString());
 			log.debug("deleting File instance");
 			try {				
 				 session = sessionFactory.openSession();
@@ -75,10 +76,12 @@ public class FileDetailDAO {
 			   Criteria criteria = session.createCriteria(FileDetail.class);
 			                     criteria.add(Restrictions.eq("users",fileDetail.getUsers()));
 			                     criteria.add(Restrictions.eq("category", fileDetail.getCategory()));
-			                     criteria.add(Restrictions.like("originalFileName", fileDetail.getOriginalFileName()));
+			                     //criteria.add(Restrictions.like("categoryIndex", fileDetail.getOriginalFileName()));
+			                     criteria.add(Restrictions.eq("categoryIndex", fileDetail.getCategoryIndex()));
 			                     //criteria.setProjection(Property.forName("fileId"));
 			                     
-			                     FileDetail result = (FileDetail) criteria.uniqueResult();  
+			                     FileDetail result = (FileDetail) criteria.uniqueResult(); 
+			                     System.out.println("result=========++++++++++++"+result);
 			                     session.close();
 			                     return result;
 		 } catch (RuntimeException re) {

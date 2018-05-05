@@ -44,6 +44,13 @@ public class Category implements java.io.Serializable{
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
+	}
 	
 
+	
+	
 }

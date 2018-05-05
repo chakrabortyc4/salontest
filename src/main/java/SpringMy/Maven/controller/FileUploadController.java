@@ -35,7 +35,6 @@ import SpringMy.Maven.model.UserDTO;
 @SessionAttributes("userForm")
 @EnableWebMvc
 
-
 public class FileUploadController {
 	
 	@Autowired
@@ -76,7 +75,7 @@ public class FileUploadController {
 			model.addAttribute("sucessMagssage",
 					"WELCOME " + userDTO.getLastname().toUpperCase() + " " + userDTO.getFirstname().toUpperCase());
 			
-			FileDetail totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file 
+			FileDTO totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file 
 			dbServices.updatePayStatusOfAUser(userDTO);	
 			
 		}
@@ -126,18 +125,23 @@ public class FileUploadController {
 		}return "file upload is successful";		
 	 }
 	 
-	 @RequestMapping(value = "/json/deleteimage")
-     public @ResponseBody FileDetail deleteResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
+	 @RequestMapping(value = "/json/deleteimage", headers = {"Accept=text/xml, application/json"}, produces = "application/json")
+     public @ResponseBody FileDTO deleteResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
     		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
     		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
-		 FileDetail totalFileData = null;
+		 FileDTO totalFileData = null;
 		 if (action.equals("delete")) {
-				totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file 
-				dbServices.updatePayStatusOfAUser(userDTO);	
+			 //System.out.println("fileDTO="+fileDTO.toString());
+			 totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file
 				
-			}
+				
+				dbServices.updatePayStatusOfAUser(userDTO);	
+				System.out.println("totalFileData="+totalFileData);
+				return totalFileData;
+			}else
+				 return new FileDTO();
 		 
-		return totalFileData;		
+				
 	 }
 }
 

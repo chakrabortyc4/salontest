@@ -188,27 +188,33 @@ public class DbServices {
 		     
 	 }
 	 
-	 public FileDetail deleteFileData(FileDTO fileDTO, UserDTO userDTO){
+	 public FileDTO deleteFileData(FileDTO fileDTO, UserDTO userDTO){
 		 
 		 FileDetail fileDetail = new FileDetail();		 
-		 Users user = new Users();
+		 Users user = usersDAO.findById(userDTO.getUserid());
 		 Category catagory = new Category();
 		 
-		 user.setUser_id(userDTO.getUserid());
+		
 		 catagory.setCategoryId(getCategoryIDfromCategoryName(fileDTO));
 		 
 		 // Create file object from file DTO
 		 fileDetail.setUsers(user);		 
 		 fileDetail.setCategory(catagory);
 		 fileDetail.setCategoryIndex(fileDTO.getPositionName());
-		
+		 		 
 		 FileDetail file1 = fileDetailDAO.findFile(fileDetail);
-		 if(file1!=null){			 			 
+		
+		 if(file1!=null){	
+			 
+			 System.out.println("I am going to DELETE");
 		     fileDetailDAO.delete(file1);
-		     return file1;
+		 
+		     return fileDTO;
 		    }
 		 else
-			 return (new FileDetail());
+			 return (new FileDTO());
+		 
+		 
 	 }
 	 
 	 public Integer getCategoryIDfromCategoryName(FileDTO fileDTO){
