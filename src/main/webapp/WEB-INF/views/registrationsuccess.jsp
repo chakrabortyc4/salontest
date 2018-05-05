@@ -93,7 +93,7 @@ div.ex5 {
 						<c:if test="${not empty titel_color1 }">disabled="disabled"</c:if> />	  
 				   </div>
 			  </div>
-			   <div class="ex3">
+			   <div class="ex3" id="upload_div_color1">
 			   <c:choose>
 					<c:when test="${empty titel_color1}">
 				    <div id="upload_image_color1"></div>
@@ -550,8 +550,16 @@ $(document).ready(function()
 	},
 	onSubmit:function(files)
 	{
-		$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+		//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
 		//return false;
+		console.log('onSubmit');
+	},
+	onSuccess:function(files,data,xhr,pd)
+	{
+
+		//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+		console.log('onSuccess ' +JSON.stringify(data));
+		
 	}
 	});
 	
@@ -623,6 +631,31 @@ $(document).ready(function()
 	        	  },
 	        	success: function(result){
 	           // $("#div1").html(result);
+	           console.log( $(this).parent().parent() );
+	           $("#upload_div_color1").append('<div id="upload_image_color1"></div>');
+	           $("#upload_image_color1").uploadFile({
+	        		url:"json/saveimage",
+	        		multiple:false,
+	        		maxFileCount:1,
+	        		fileName:"images",
+	        		acceptFiles:"image/*",
+	        		showPreview:true,
+	        		previewHeight: "100px",
+	        		previewWidth: "100px",
+	        		allowedTypes:"jpg,jpeg",
+	        		maxFileSize:20848820,
+	        		formData: {"catagoryName":"color","positionName":"color1","action":"save"},
+	        		dynamicFormData: function()
+	        		{
+	        			var title = $('#titelcolour1').val();
+	        			return {"titel":title};
+	        		},
+	        		onSubmit:function(files)
+	        		{
+	        			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+	        			//return false;
+	        		}
+	        		});
 	           console.log(result);
 	        }});
 	    });

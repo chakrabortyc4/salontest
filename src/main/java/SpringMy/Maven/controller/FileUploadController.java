@@ -117,7 +117,7 @@ public class FileUploadController {
 			
 			if (dbServices.saveFileData(fileDTO, userDTO)) { 
 				dbServices.updatePayStatusOfAUser(userDTO);											
-				commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
+				//commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
 				
 			} else
 				   return "title should not be same on same catagory";
@@ -135,7 +135,7 @@ public class FileUploadController {
 			 totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file
 				
 				
-				dbServices.updatePayStatusOfAUser(userDTO);	
+				//dbServices.updatePayStatusOfAUser(userDTO);	
 				System.out.println("totalFileData="+totalFileData);
 				return totalFileData;
 			}else

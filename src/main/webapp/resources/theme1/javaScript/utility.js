@@ -71,7 +71,7 @@ function dissableField() {
 	
 	//alert(titelColor1);
 	//alert(titelColor2);
-	var isDisabled = "disabled";
+	/*var isDisabled = "disabled";
 	
 	if (titelColor1.length > 0) {
 		document.getElementById("titelcolour1").disabled = isDisabled;
@@ -95,7 +95,7 @@ function dissableField() {
 		document.getElementById("titelcolour4").disabled = isDisabled;
 		document.getElementById("browsecol4").disabled = isDisabled;
 		document.getElementById("uploadcol4").disabled = isDisabled;
-	}
+	}*/
 
 }
 
