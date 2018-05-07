@@ -3,17 +3,17 @@ package SpringMy.Maven.db.enities;
 import java.util.Arrays;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import SpringMy.Maven.db.enities.Users;
 
 @Entity
 @Table(name = "file", catalog = "salontest")
@@ -92,7 +92,9 @@ public class FileDetail implements java.io.Serializable {
 		this.originalFileName = originalFileName;
 	}
 
+	@Lob
 	@Column(name = "file", nullable = false)
+	@Basic(fetch=FetchType.LAZY)
 	public byte[] getFile() {
 		return this.file;
 	}

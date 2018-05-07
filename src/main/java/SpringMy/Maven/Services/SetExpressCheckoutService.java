@@ -1,12 +1,5 @@
 package SpringMy.Maven.Services;
 
-import org.apache.log4j.Logger;
-
-import com.paypal.base.exception.PayPalException;
-
-import urn.ebay.apis.eBLBaseComponents.CurrencyCodeType;
-import urn.ebay.apis.eBLBaseComponents.PaymentActionCodeType;
-
 public class SetExpressCheckoutService {
 	
 	/*private static Logger log = Logger.getLogger(SetExpressCheckoutService.class);

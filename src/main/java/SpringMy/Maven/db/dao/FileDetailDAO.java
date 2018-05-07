@@ -53,7 +53,7 @@ public class FileDetailDAO {
 	 
 	 public void delete(FileDetail persistentInstance) {
 		     
-		 System.out.println("file1="+persistentInstance.toString());
+		 //System.out.println("file1="+persistentInstance.toString());
 			log.debug("deleting File instance");
 			try {				
 				 session = sessionFactory.openSession();
@@ -81,7 +81,7 @@ public class FileDetailDAO {
 			                     //criteria.setProjection(Property.forName("fileId"));
 			                     
 			                     FileDetail result = (FileDetail) criteria.uniqueResult(); 
-			                     System.out.println("result=========++++++++++++"+result);
+			                     //System.out.println("result=========++++++++++++"+result);
 			                     session.close();
 			                     return result;
 		 } catch (RuntimeException re) {

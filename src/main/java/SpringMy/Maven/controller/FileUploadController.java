@@ -136,7 +136,7 @@ public class FileUploadController {
 				
 				
 				//dbServices.updatePayStatusOfAUser(userDTO);	
-				System.out.println("totalFileData="+totalFileData);
+				//System.out.println("totalFileData="+totalFileData);
 				return totalFileData;
 			}else
 				 return new FileDTO();

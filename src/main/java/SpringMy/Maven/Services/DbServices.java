@@ -170,9 +170,7 @@ public class DbServices {
 		      fileDetail.setCategory(catagory);
 		      //save file
 		      List<String> listOfTitel = fileDetailDAO.findTitelListOfaCatagory(fileDetail);
-		      System.out.println("listOfTitel=================================="+listOfTitel);
 		      if(listOfTitel.size()==0){		    	  
-		    	  System.out.println("Save file data="+fileDetail.toString());
 		    	  fileDetailDAO.persist(fileDetail);
 		    	  return true;
 		      }

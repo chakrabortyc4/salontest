@@ -18,7 +18,7 @@
     
     <!-- Hibernate data -->
     
-    <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/salontest?autoReconnect=true"/>
         <property name="username" value="root"/>
@@ -30,7 +30,7 @@
     
     <!-- SessionFactory & DataSource for HibernateDaoSupport Object in Spring -->
 			
-	<bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="mySessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
 		<property name="annotatedClasses">
 			<list>

@@ -105,7 +105,7 @@ div.ex5 {
 			   </div>
 		 </div>
 
-		 <div class="col-sm-2">
+		 <div class="col-sm-2" id="preview_color1">
               <img alt=" " id="col1img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color1}'/>" />
 	     </div>
 
@@ -118,19 +118,19 @@ div.ex5 {
 				  </div>
 			 </div> 
 				
-			 <div class="ex3">
+			 <div class="ex3" id="upload_div_color2">
 			  <c:choose>
 					<c:when test="${empty titel_color2}">
 				     <div id="upload_image_color2"></div>
 				    </c:when>
 					<c:otherwise>
-				        <button type="button" class="btn btn-danger">Delete</button>
+				        <button type="button" id="delete_image_color2" class="btn btn-danger">Delete</button>
 				    </c:otherwise>
 				</c:choose>
 			 </div>
 		</div>
 		                               
-		<div class="col-sm-2">
+		<div class="col-sm-2" id="preview_color2">
 			 <img alt=" " id="col2img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color2}'/>" />
 		</div>
 	</div>	
@@ -154,19 +154,19 @@ div.ex5 {
 						<c:if test="${not empty titel_color3 }">disabled="disabled"</c:if>/>	  
 				   </div>
 			  </div>
-			   <div class="ex3">
+			   <div class="ex3" id="upload_div_color3">
 			   <c:choose>
 					<c:when test="${empty titel_color3}">
 				    <div id="upload_image_color3"></div>
 				    </c:when>
 					<c:otherwise>
-				        <button type="button" class="btn btn-danger">Delete</button>
+				        <button type="button" id="delete_image_color3" class="btn btn-danger">Delete</button>
 				    </c:otherwise>
 				</c:choose>
 			   </div>
 		 </div>
 
-		 <div class="col-sm-2">
+		 <div class="col-sm-2" id="preview_color3">
               <img alt=" " id="col3img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color3}'/>" />
 	     </div>
 
@@ -179,19 +179,19 @@ div.ex5 {
 				  </div>
 			 </div> 
 				
-			 <div class="ex3">
+			 <div class="ex3" id="upload_div_color4">
 				<c:choose>
 					<c:when test="${empty titel_color4}">
 				      <div id="upload_image_color4"></div>
 				    </c:when>
 					<c:otherwise>
-				        <button type="button" class="btn btn-danger">Delete</button>
+				        <button type="button" id="delete_image_color4" class="btn btn-danger">Delete</button>
 				    </c:otherwise>
 				</c:choose>
 			 </div>
 		</div>
 		                               
-		<div class="col-sm-2">
+		<div class="col-sm-2" id="preview_color4">
 			 <img alt=" " id="col4img" style="float: left; width: 100px; height: 100px;" src="data:image/jpg;base64,<c:out value='${image_color4}'/>" />
 		</div>
 	</div>		
@@ -632,7 +632,7 @@ $(document).ready(function()
 	        	success: function(result){
 	           // $("#div1").html(result);
 	           console.log( $(this).parent().parent() );
-	           $("#upload_div_color1").append('<div id="upload_image_color1"></div>');
+	           $("#upload_div_color1").empty().append('<div id="upload_image_color1"></div>');
 	           $("#upload_image_color1").uploadFile({
 	        		url:"json/saveimage",
 	        		multiple:false,
@@ -656,11 +656,131 @@ $(document).ready(function()
 	        			//return false;
 	        		}
 	        		});
+	           $("#preview_color1").empty();
+	           $("#titelcolour1").prop('disabled', false);
 	           console.log(result);
 	        }});
 	    });
 	
+	 $("#delete_image_color2").click(function(){
+	        $.ajax({url: "json/deleteimage", 
+	        	data: {"catagoryName":"color","positionName":"color2","action":"delete"},
+	        	  beforeSend: function(request) {
+	        	    request.setRequestHeader("Content-Type", "application/json");
+	        	    request.setRequestHeader("Accept", "application/json");
+	        	  },
+	        	success: function(result){
+	           // $("#div1").html(result);
+	           console.log( $(this).parent().parent() );
+	           $("#upload_div_color2").empty().append('<div id="upload_image_color2"></div>');
+	           $("#upload_image_color2").uploadFile({
+	        		url:"json/saveimage",
+	        		multiple:false,
+	        		maxFileCount:1,
+	        		fileName:"images",
+	        		acceptFiles:"image/*",
+	        		showPreview:true,
+	        		previewHeight: "100px",
+	        		previewWidth: "100px",
+	        		allowedTypes:"jpg,jpeg",
+	        		maxFileSize:20848820,
+	        		formData: {"catagoryName":"color","positionName":"color2","action":"save"},
+	        		dynamicFormData: function()
+	        		{
+	        			var title = $('#titelcolour2').val();
+	        			return {"titel":title};
+	        		},
+	        		onSubmit:function(files)
+	        		{
+	        			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+	        			//return false;
+	        		}
+	        		});
+	           $("#preview_color2").empty();
+	           $("#titelcolour2").prop('disabled', false);
+	           console.log(result);
+	        }});
+	    });
 	
+	 $("#delete_image_color3").click(function(){
+	        $.ajax({url: "json/deleteimage", 
+	        	data: {"catagoryName":"color","positionName":"color3","action":"delete"},
+	        	  beforeSend: function(request) {
+	        	    request.setRequestHeader("Content-Type", "application/json");
+	        	    request.setRequestHeader("Accept", "application/json");
+	        	  },
+	        	success: function(result){
+	           // $("#div1").html(result);
+	           console.log( $(this).parent().parent() );
+	           $("#upload_div_color3").empty().append('<div id="upload_image_color3"></div>');
+	           $("#upload_image_color3").uploadFile({
+	        		url:"json/saveimage",
+	        		multiple:false,
+	        		maxFileCount:1,
+	        		fileName:"images",
+	        		acceptFiles:"image/*",
+	        		showPreview:true,
+	        		previewHeight: "100px",
+	        		previewWidth: "100px",
+	        		allowedTypes:"jpg,jpeg",
+	        		maxFileSize:20848820,
+	        		formData: {"catagoryName":"color","positionName":"color3","action":"save"},
+	        		dynamicFormData: function()
+	        		{
+	        			var title = $('#titelcolour3').val();
+	        			return {"titel":title};
+	        		},
+	        		onSubmit:function(files)
+	        		{
+	        			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+	        			//return false;
+	        		}
+	        		});
+	           $("#preview_color3").empty();
+	           $("#titelcolour3").prop('disabled', false);
+	           console.log(result);
+	        }});
+	    });
+	 
+	 $("#delete_image_color4").click(function(){
+	        $.ajax({url: "json/deleteimage", 
+	        	data: {"catagoryName":"color","positionName":"color4","action":"delete"},
+	        	  beforeSend: function(request) {
+	        	    request.setRequestHeader("Content-Type", "application/json");
+	        	    request.setRequestHeader("Accept", "application/json");
+	        	  },
+	        	success: function(result){
+	           // $("#div1").html(result);
+	           console.log( $(this).parent().parent() );
+	           $("#upload_div_color4").empty().append('<div id="upload_image_color4"></div>');
+	           $("#upload_image_color4").uploadFile({
+	        		url:"json/saveimage",
+	        		multiple:false,
+	        		maxFileCount:1,
+	        		fileName:"images",
+	        		acceptFiles:"image/*",
+	        		showPreview:true,
+	        		previewHeight: "100px",
+	        		previewWidth: "100px",
+	        		allowedTypes:"jpg,jpeg",
+	        		maxFileSize:20848820,
+	        		formData: {"catagoryName":"color","positionName":"color4","action":"save"},
+	        		dynamicFormData: function()
+	        		{
+	        			var title = $('#titelcolour4').val();
+	        			return {"titel":title};
+	        		},
+	        		onSubmit:function(files)
+	        		{
+	        			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+	        			//return false;
+	        		}
+	        		});
+	           $("#preview_color4").empty();
+	           $("#titelcolour4").prop('disabled', false);
+	           console.log(result);
+	        }});
+	    });
 });
 </script>
 </html>

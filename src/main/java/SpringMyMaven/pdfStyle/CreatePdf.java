@@ -1,23 +1,6 @@
 package SpringMyMaven.pdfStyle;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
-public class CreatePdf {
+public class CreatePdf {/*
 	
 	
   Document document = null;
@@ -34,19 +17,19 @@ public class CreatePdf {
 		PdfWriter.getInstance(document, new FileOutputStream(dest));
 		
 		//set page number
-		/*int n = document.getPageNumber();
+		int n = document.getPageNumber();
 		for (int i = 1; i <= n; i++) {
 			 document.showTextAligned(new Paragraph(String.format("page %s of %s", i, n)),559, 806, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
 			
-        }*/
+        }
        }
 	
-	/*public Paragraph createParagraph(){
+	public Paragraph createParagraph(){
 		Paragraph paragraph = new Paragraph();
 		paragraph.
 		
 		
-	}*/
+	}
 	
 	public void createTabel(int tableSizeInPercent, int numberOfColumn, int numberOfRow, String content){
 		  PdfPTable pdfPTable = new PdfPTable(numberOfColumn);
@@ -148,7 +131,7 @@ public class CreatePdf {
 	
 	
 
-}
+*/}
 
 
 /* F
