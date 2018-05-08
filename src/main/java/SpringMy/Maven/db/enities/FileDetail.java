@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -14,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "file", catalog = "salontest")
@@ -45,6 +48,8 @@ public class FileDetail implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(generator= "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
 	@Column(name = "file_id", unique = true, nullable = false)
 	public int getFileId() {
 		return this.fileId;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("session")
 public class DisplayFileDTO {
-	
+	Integer fileId;
 	String categoryname;
 	String titel;
 	String time;
@@ -19,8 +19,11 @@ public class DisplayFileDTO {
 		// TODO Auto-generated constructor stub
 	}
 		
-	public DisplayFileDTO(String categoryname, String titel, String time, String position, byte[] itemImage) {
+	
+	public DisplayFileDTO(Integer fileId, String categoryname, String titel, String time, String position,
+			byte[] itemImage) {
 		super();
+		this.fileId = fileId;
 		this.categoryname = categoryname;
 		this.titel = titel;
 		this.time = time;
@@ -28,6 +31,18 @@ public class DisplayFileDTO {
 		this.itemImage = itemImage;
 	}
 
+
+
+
+
+	public Integer getFileId() {
+		return fileId;
+	}
+
+
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
 
 
 	public String getCategoryname() {

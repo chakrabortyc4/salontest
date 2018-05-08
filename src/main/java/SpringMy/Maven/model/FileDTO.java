@@ -4,7 +4,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class FileDTO {
 	
-	 
+	 private Integer fileId;
 	 private String titel;
 	 private String catagoryName;
 	 private String positionName;
@@ -13,13 +13,37 @@ public class FileDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public FileDTO(String titel, String catagoryName, String positionName, CommonsMultipartFile images) {
+	
+	
+	
+	
+	public FileDTO(Integer fileId, String titel, String catagoryName, String positionName,
+			CommonsMultipartFile images) {
 		super();
+		this.fileId = fileId;
 		this.titel = titel;
 		this.catagoryName = catagoryName;
 		this.positionName = positionName;
 		this.images = images;
 	}
+
+    
+
+
+	public Integer getFileId() {
+		return fileId;
+	}
+
+
+
+
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
+
+
+
+
 	public String getTitel() {
 		return titel;
 	}
@@ -44,12 +68,17 @@ public class FileDTO {
 	public void setImages(CommonsMultipartFile images) {
 		this.images = images;
 	}
-	
+
+
+
+
 	@Override
 	public String toString() {
-		return "FileDTO [titel=" + titel + ", catagoryName=" + catagoryName + ", positionName=" + positionName
-				+ ", images=" + images + "]";
+		return "FileDTO [fileId=" + fileId + ", titel=" + titel + ", catagoryName=" + catagoryName + ", positionName="
+				+ positionName + ", images=" + images + "]";
 	}
+	
+	
 	 
 	
 }

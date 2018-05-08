@@ -1,17 +1,9 @@
 package SpringMy.Maven.controller;
-/*
- * Author Chandan Chakraborty
- */
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +17,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import SpringMy.Maven.Services.CommonServices;
 import SpringMy.Maven.Services.DbServices;
-import SpringMy.Maven.db.enities.FileDetail;
-import SpringMy.Maven.model.DisplayFileDTO;
 import SpringMy.Maven.model.FileDTO;
-import SpringMy.Maven.model.PaymentDTO;
+import SpringMy.Maven.model.ResponseDTO;
 import SpringMy.Maven.model.UserDTO;
 
 @Controller
@@ -46,8 +36,8 @@ public class FileUploadController {
 	
 	
 	
-	 @RequestMapping(value = "/saveimage")
-     public String uploadResources(@RequestParam String action, HttpServletRequest servletRequest, HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
+	// @RequestMapping(value = "/saveimage")
+    /* public String uploadResources(@RequestParam String action, HttpServletRequest servletRequest, HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
     		 Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
 		 
 		if (action.equals("save")) {
@@ -104,28 +94,73 @@ public class FileUploadController {
          
 		 return "registrationsuccess";
 		 
-	     }
+	     }*/
 	
 	
 	 @RequestMapping(value = "/json/saveimage")
-     public @ResponseBody String uploadResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
+     public @ResponseBody ResponseDTO uploadResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
     		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
     		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
 		 
+		 ResponseDTO responseDTO = new ResponseDTO();
+		 
 		if (action.equals("save")) {
 			CommonsMultipartFile imagecm = fileDTO.getImages();
+			if(fileDTO.getTitel().trim().length()>1 && fileDTO.getTitel().trim().length()<70) {
+				Integer fileid = dbServices.saveFileData(fileDTO, userDTO);
+			   if (fileid!=0) { 
+				   dbServices.updatePayStatusOfAUser(userDTO);	
+				   responseDTO.setSuccess(true);
+				   responseDTO.setMessage("file upload is successful");
+				   fileDTO.setFileId(fileid);
+				   responseDTO.setData(fileDTO);
+				   
+				   //commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);				
+			       } else {
+			    	        responseDTO.setSuccess(false); 
+			    	        responseDTO.setMessage("title should not be same on same catagory");
+				            //return "title should not be same on same catagory";
+			              }
+			        //return "file upload is successful";
+				
+		         }
+		      else if(fileDTO.getTitel()==null) {
+		    	      responseDTO.setSuccess(false); 
+	    	          responseDTO.setMessage("Kindly enter a valid title");
+			          //return "Kindly enter a valid title";
+		             }
+		      else if(fileDTO.getTitel().trim().length()>70) {
+			          //return "enter title within 50 chareactere"; 
+		    	      responseDTO.setSuccess(false); 
+    	              responseDTO.setMessage("enter title within 50 chareactere");
+		             }
+	         }
+		return responseDTO;
+	 } 
+	 @RequestMapping(value = "/json/deleteimage", headers = {"Accept=text/xml, application/json"}, produces = "application/json")
+     public @ResponseBody ResponseDTO deleteResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
+    		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
+    		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
+		 
+		 ResponseDTO responseDTO = new ResponseDTO();
+		 
+		 if (action.equals("delete")) {
 			
-			if (dbServices.saveFileData(fileDTO, userDTO)) { 
-				dbServices.updatePayStatusOfAUser(userDTO);											
-				//commonServices.saveFile(userDTO.getUserid() + File.separator + fileDTO.getCatagoryName(), imagecm);
+			String  totalFileData = dbServices.deleteFileData(fileDTO);//delete file				
+			dbServices.updatePayStatusOfAUser(userDTO);	
+			responseDTO.setSuccess(true);
+			responseDTO.setMessage(totalFileData);
 				
-			} else
-				   return "title should not be same on same catagory";
-				
-		}return "file upload is successful";		
+			}
+		 
+		 return responseDTO;	
 	 }
 	 
-	 @RequestMapping(value = "/json/deleteimage", headers = {"Accept=text/xml, application/json"}, produces = "application/json")
+	 
+	 
+	 
+	 
+	/* @RequestMapping(value = "/json/deleteimage", headers = {"Accept=text/xml, application/json"}, produces = "application/json")
      public @ResponseBody FileDTO deleteResourcesJson(@RequestParam String action, HttpServletRequest servletRequest, 
     		                                         HttpServletResponse response, @ModelAttribute("product") FileDTO fileDTO, 
     		                                         Model model,@ModelAttribute("userForm") UserDTO userDTO) throws IOException{
@@ -135,14 +170,14 @@ public class FileUploadController {
 			 totalFileData = dbServices.deleteFileData(fileDTO, userDTO);//delete file
 				
 				
-				//dbServices.updatePayStatusOfAUser(userDTO);	
+				dbServices.updatePayStatusOfAUser(userDTO);	
 				//System.out.println("totalFileData="+totalFileData);
 				return totalFileData;
 			}else
 				 return new FileDTO();
 		 
 				
-	 }
+	 }*/
 }
 
 

@@ -148,7 +148,7 @@ public class DbServices {
 	   }
 
 	
-	 public boolean saveFileData(FileDTO fileDTO, UserDTO userDTO) throws IOException{
+	 public Integer saveFileData(FileDTO fileDTO, UserDTO userDTO) throws IOException{
 		 		      
 		      FileDetail fileDetail = new FileDetail();
 		      
@@ -171,22 +171,35 @@ public class DbServices {
 		      //save file
 		      List<String> listOfTitel = fileDetailDAO.findTitelListOfaCatagory(fileDetail);
 		      if(listOfTitel.size()==0){		    	  
-		    	  fileDetailDAO.persist(fileDetail);
-		    	  return true;
+		    	 Integer fileid= fileDetailDAO.persist(fileDetail);
+		    	  return fileid;
 		      }
 		      else if (listOfTitel.contains(fileDetail.getTitel())){
-		    	       return false;
+		    	       return 0;
 		              }
 		      else{
-		    	    fileDetailDAO.persist(fileDetail);
-		    	    return true;		    	    
+		    	  Integer fileid= fileDetailDAO.persist(fileDetail);
+		    	    return fileid;		    	    
 		          }	
 		      
 		      
 		     
 	 }
 	 
-	 public FileDTO deleteFileData(FileDTO fileDTO, UserDTO userDTO){
+public String deleteFileData(FileDTO fileDTO){
+		 		
+	FileDetail fileDetail = new FileDetail();
+	if(fileDTO.getFileId()!=null) {
+	//fileDetail.setFileId(fileDTO.getFileId());	 
+	fileDetailDAO.deletebyID(fileDTO.getFileId());			
+	return "Success";
+	}else {
+		    return "Unable to delete.";
+	       }
+		 
+	 }
+	 
+	/* public FileDTO deleteFileData(FileDTO fileDTO, UserDTO userDTO){
 		 
 		 FileDetail fileDetail = new FileDetail();		 
 		 Users user = usersDAO.findById(userDTO.getUserid());
@@ -213,7 +226,7 @@ public class DbServices {
 			 return (new FileDTO());
 		 
 		 
-	 }
+	 }*/
 	 
 	 public Integer getCategoryIDfromCategoryName(FileDTO fileDTO){
 		 
@@ -232,7 +245,8 @@ public class DbServices {
 		    		DisplayFileDTO displayFileDTO = new DisplayFileDTO();
 		    		displayFileDTO.setItemImage(f.getFile());
 		    		displayFileDTO.setTime(f.getUpload_time().toString());
-		    		displayFileDTO.setTitel(f.getTitel());	
+		    		displayFileDTO.setTitel(f.getTitel());
+		    		displayFileDTO.setFileId(f.getFileId());
 		    		//displayFileDTO.setPosition(f.getOriginalFileName().substring(0, f.getOriginalFileName().indexOf("_")));
 		    		displayFileDTO.setPosition(f.getCategoryIndex());
 		    		LinkedList<DisplayFileDTO>  l =hm.get(f.getCategory().getCategoryName());
@@ -245,6 +259,7 @@ public class DbServices {
 		    		  displayFileDTO.setItemImage(f.getFile());
 		    		  displayFileDTO.setTime(f.getUpload_time().toString());
 		    		  displayFileDTO.setTitel(f.getTitel());
+		    		  displayFileDTO.setFileId(f.getFileId());
 		    		  //displayFileDTO.setPosition(f.getOriginalFileName().substring(0, f.getOriginalFileName().indexOf("_")));
 		    		  displayFileDTO.setPosition(f.getCategoryIndex());
 		    		  l.add(displayFileDTO);

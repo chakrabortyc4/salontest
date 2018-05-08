@@ -35,20 +35,40 @@ public class FileDetailDAO {
 	        this.sessionFactory = sessionFactory;
 	       }
 	 
-	 public void persist(FileDetail transientInstance){
+	 public Integer persist(FileDetail transientInstance){
 		 log.debug("persisting Domain instance");
 		 try {			
 			 session = sessionFactory.openSession();
 			 transaction = session.beginTransaction();
 			 session.save(transientInstance);
-			 log.debug("persist successful");
-			 transaction.commit();
+			 log.debug("persist successful");			
+			 transaction.commit();		
 			 session.close();
+			 return transientInstance.getFileId();
 		    } catch (RuntimeException re) {
 			         log.error("persist failed", re);
 			         throw re;
 		            }		 
 	 }
+	 
+	 
+	 @SuppressWarnings("deprecation")
+	public void deletebyID(Integer fileId) {
+		 
+		 log.debug("deleting File instance");
+			try {	
+				 session = sessionFactory.openSession();
+				 transaction = session.beginTransaction();
+		         String hql = "delete from FileDetail where fileId= :fileId";
+		         session.createQuery(hql).setInteger("fileId", fileId).executeUpdate();
+		         transaction.commit();
+		         session.close();
+			} catch (RuntimeException re) {
+				log.error("delete failed", re);
+				throw re;
+			}
+	 }
+	 
 	 
 	 
 	 public void delete(FileDetail persistentInstance) {

@@ -84,6 +84,7 @@ public class UserLoginController {
                                 	 String encodedString = new String(encoded);
                                 	 model.addAttribute("image_"+dfdto.getPosition(), encodedString);
                                 	 model.addAttribute("titel_"+dfdto.getPosition(), dfdto.getTitel());
+                                	 model.addAttribute("id_"+dfdto.getPosition(), dfdto.getFileId());
                                 	 //System.out.println("image_"+dfdto.getPosition()+ "    "+"titel_"+dfdto.getPosition()+"  "+dfdto.getTitel());                               	     
                                     }                                
 							     }							

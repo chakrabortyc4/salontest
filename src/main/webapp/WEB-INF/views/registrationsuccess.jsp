@@ -91,6 +91,7 @@ div.ex5 {
 				   <div class="col-sm-12">
 						<b>Title :</b><input id="titelcolour1" class="form-control" placeholder="Enter Title" value="${titel_color1}" 
 						<c:if test="${not empty titel_color1 }">disabled="disabled"</c:if> />	  
+						<input type="hidden" id="idcolour1"  value="${id_color1}">
 				   </div>
 			  </div>
 			   <div class="ex3" id="upload_div_color1">
@@ -115,6 +116,7 @@ div.ex5 {
 				  <div class="col-sm-12">
 					   <b>Title :</b><input id="titelcolour2" class="form-control" placeholder="Enter Title" value="${titel_color2}"
 					   <c:if test="${not empty titel_color2 }">disabled="disabled"</c:if> />
+					   <input type="hidden" id="idcolour2"  value="${id_color2}">
 				  </div>
 			 </div> 
 				
@@ -151,7 +153,8 @@ div.ex5 {
 			  <div class="ex2">
 				   <div class="col-sm-12">
 						<b>Title :</b><input id="titelcolour3" class="form-control" placeholder="Enter Title" value="${titel_color3}" 
-						<c:if test="${not empty titel_color3 }">disabled="disabled"</c:if>/>	  
+						<c:if test="${not empty titel_color3 }">disabled="disabled"</c:if>/>
+						<input type="hidden" id="idcolour3"  value="${id_color3}">	  
 				   </div>
 			  </div>
 			   <div class="ex3" id="upload_div_color3">
@@ -176,6 +179,7 @@ div.ex5 {
 				  <div class="col-sm-12">
 					   <b>Title :</b><input id="titelcolour4" class="form-control" placeholder="Enter Title" value="${titel_color4}" 
 					   <c:if test="${not empty titel_color4 }">disabled="disabled"</c:if>/>
+					   <input type="hidden" id="idcolour4"  value="${id_color4}">
 				  </div>
 			 </div> 
 				
@@ -580,6 +584,19 @@ $(document).ready(function()
 		{
 			var title = $('#titelcolour2').val();
 			return {"titel":title};
+		},
+		onSubmit:function(files)
+		{
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+			//return false;
+			console.log('onSubmit');
+		},
+		onSuccess:function(files,data,xhr,pd)
+		{
+
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+			console.log('onSuccess ' +JSON.stringify(data));
+			
 		}
 		});
 	
@@ -599,6 +616,19 @@ $(document).ready(function()
 		{
 			var title = $('#titelcolour3').val();
 			return {"titel":title};
+		},
+		onSubmit:function(files)
+		{
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+			//return false;
+			console.log('onSubmit');
+		},
+		onSuccess:function(files,data,xhr,pd)
+		{
+
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+			console.log('onSuccess ' +JSON.stringify(data));
+			
 		}
 		});
 	
@@ -618,13 +648,26 @@ $(document).ready(function()
 		{
 			var title = $('#titelcolour4').val();
 			return {"titel":title};
+		},
+		onSubmit:function(files)
+		{
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Submitting:"+JSON.stringify(files));
+			//return false;
+			console.log('onSubmit');
+		},
+		onSuccess:function(files,data,xhr,pd)
+		{
+
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+			console.log('onSuccess ' +JSON.stringify(data));
+			
 		}
 		});
 	
 	//delete button ajax call
 	 $("#delete_image_color1").click(function(){
 	        $.ajax({url: "json/deleteimage", 
-	        	data: {"catagoryName":"color","positionName":"color1","action":"delete"},
+	        	data: {"catagoryName":"color","positionName":"color1","action":"delete","fileId":$('#idcolour1').val()},
 	        	  beforeSend: function(request) {
 	        	    request.setRequestHeader("Content-Type", "application/json");
 	        	    request.setRequestHeader("Accept", "application/json");
