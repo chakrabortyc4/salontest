@@ -45,7 +45,8 @@ CREATE TABLE `discount_data` (
   `discount_persent` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`discount_id`),
-  UNIQUE KEY `UK_i7wqpm4daw48kmi6kqc09tgym` (`user_id`)
+  UNIQUE KEY `UK_i7wqpm4daw48kmi6kqc09tgym` (`user_id`),
+  CONSTRAINT `fk_user_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,7 +71,7 @@ CREATE TABLE `file` (
   KEY `FK_531rkvqn45lw9t2djf0c2mw9h` (`user_id`),
   CONSTRAINT `FK_531rkvqn45lw9t2djf0c2mw9h` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `FK_bf4ylg9f9tq16wv3strp0wimv` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +83,7 @@ DROP TABLE IF EXISTS `pay_status`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pay_status` (
   `pay_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(45) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `attempt_section` int(11) NOT NULL,
   `total_entry` int(11) NOT NULL,
   `coupon_code_number` varchar(45) DEFAULT NULL,
@@ -95,7 +96,9 @@ CREATE TABLE `pay_status` (
   `pay_time` datetime DEFAULT NULL,
   `last_update_time` datetime DEFAULT NULL,
   `recived_courency_type` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`pay_id`)
+  PRIMARY KEY (`pay_id`),
+  KEY `fk_user_idx` (`user_id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,4 +146,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-02 14:43:06
+-- Dump completed on 2018-05-10 17:30:55
