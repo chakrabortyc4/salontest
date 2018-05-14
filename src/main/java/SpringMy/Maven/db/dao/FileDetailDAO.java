@@ -1,49 +1,40 @@
 package SpringMy.Maven.db.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import SpringMy.Maven.db.enities.FileDetail;
+import SpringMy.Maven.db.enities.File;
 import SpringMy.Maven.model.CategoryCountMap;
-import SpringMy.Maven.model.UserStatusDisplayDTO;
-
+@Repository
 public class FileDetailDAO {
 	
 	 private static final Log log = LogFactory.getLog(FileDetailDAO.class);
-	 
+	 @Autowired
 	 private SessionFactory sessionFactory;
-	 private Transaction transaction;
-	 private Session session;
 	 
 	 public void setSessionFactory(SessionFactory sessionFactory) {
 	        this.sessionFactory = sessionFactory;
 	       }
 	 
-	 public Integer persist(FileDetail transientInstance){
+	 public Integer persist(File transientInstance){
 		 log.debug("persisting Domain instance");
 		 try {			
-			 session = sessionFactory.openSession();
-			 transaction = session.beginTransaction();
+			 Session session = sessionFactory.getCurrentSession();
 			 session.save(transientInstance);
 			 log.debug("persist successful");			
-			 transaction.commit();		
-			 session.close();
 			 return transientInstance.getFileId();
 		    } catch (RuntimeException re) {
 			         log.error("persist failed", re);
@@ -57,12 +48,9 @@ public class FileDetailDAO {
 		 
 		 log.debug("deleting File instance");
 			try {	
-				 session = sessionFactory.openSession();
-				 transaction = session.beginTransaction();
-		         String hql = "delete from FileDetail where fileId= :fileId";
+				 Session session = sessionFactory.getCurrentSession();
+		         String hql = "delete from File where fileId= :fileId";
 		         session.createQuery(hql).setInteger("fileId", fileId).executeUpdate();
-		         transaction.commit();
-		         session.close();
 			} catch (RuntimeException re) {
 				log.error("delete failed", re);
 				throw re;
@@ -71,17 +59,13 @@ public class FileDetailDAO {
 	 
 	 
 	 
-	 public void delete(FileDetail persistentInstance) {
+	 public void delete(File persistentInstance) {
 		     
-		 //System.out.println("file1="+persistentInstance.toString());
 			log.debug("deleting File instance");
 			try {				
-				 session = sessionFactory.openSession();
-				 transaction = session.beginTransaction();
+				 Session session = sessionFactory.getCurrentSession();
 				 session.delete(persistentInstance);
 				 log.debug("delete successful");
-				 transaction.commit();
-				 session.close();
 			} catch (RuntimeException re) {
 				log.error("delete failed", re);
 				throw re;
@@ -89,20 +73,19 @@ public class FileDetailDAO {
 		}
 	 
 	 
-	 public FileDetail findFile(FileDetail fileDetail){
+	 public File findFile(File fileDetail){
 		 log.debug("File instance"); 
 		 try {	 
-			   session = sessionFactory.openSession();
-			   Criteria criteria = session.createCriteria(FileDetail.class);
+			    Session session = sessionFactory.getCurrentSession();
+			    Criteria criteria = session.createCriteria(File.class);
 			                     criteria.add(Restrictions.eq("users",fileDetail.getUsers()));
 			                     criteria.add(Restrictions.eq("category", fileDetail.getCategory()));
 			                     //criteria.add(Restrictions.like("categoryIndex", fileDetail.getOriginalFileName()));
 			                     criteria.add(Restrictions.eq("categoryIndex", fileDetail.getCategoryIndex()));
 			                     //criteria.setProjection(Property.forName("fileId"));
 			                     
-			                     FileDetail result = (FileDetail) criteria.uniqueResult(); 
+			                     File result = (File) criteria.uniqueResult(); 
 			                     //System.out.println("result=========++++++++++++"+result);
-			                     session.close();
 			                     return result;
 		 } catch (RuntimeException re) {
 	         log.error("get file_id failed", re);
@@ -110,12 +93,12 @@ public class FileDetailDAO {
           }		 
 	 }
 	 
-	 public List<String> findTitelListOfaCatagory(FileDetail fileDetail){
+	 public List<String> findTitelListOfaCatagory(File fileDetail){
 		 
 		 log.debug("File instance");		 
 		  try {	 
-			   session = sessionFactory.openSession();
-			   Criteria criteria = session.createCriteria(FileDetail.class);
+			    Session session = sessionFactory.getCurrentSession();
+			    Criteria criteria = session.createCriteria(File.class);
 			                     criteria.add(Restrictions.eq("users",fileDetail.getUsers()));
 			                     criteria.add(Restrictions.eq("category", fileDetail.getCategory()));
 			                     criteria.setProjection(Property.forName("titel"));
@@ -124,7 +107,6 @@ public class FileDetailDAO {
 			   		   
 			   System.out.println("value="+listOfTitel); 
 			   
-			   session.close();                 
 			   return listOfTitel;
 		      } catch (RuntimeException re) {
 		         log.error("File_Name failed", re);
@@ -133,15 +115,15 @@ public class FileDetailDAO {
 			 
 		 }
 	 
-	 public List<FileDetail> findByExample(FileDetail instance) {
+	 public List<File> findByExample(File instance) {
 		 log.debug("finding User instance by example");
 			try {
-				session = sessionFactory.openSession();
-				   Criteria criteria = session.createCriteria(FileDetail.class);
+				   Session session = sessionFactory.getCurrentSession();
+				   Criteria criteria = session.createCriteria(File.class);
 				                     criteria.add(Restrictions.eq("users",instance.getUsers()));
 				                     criteria.addOrder(Order.asc("upload_time"));
 				                     
-			   List<FileDetail> result = criteria.list();
+			   List<File> result = criteria.list();
 			      
 			   return result;
 				
@@ -153,13 +135,13 @@ public class FileDetailDAO {
 	 }
 	 
 	
-	 public List<CategoryCountMap> getCategoryWiseFileCount(FileDetail fileDetail) {
+	 public List<CategoryCountMap> getCategoryWiseFileCount(File fileDetail) {
 		 log.debug("finding Category Wise FileCount of a User");
-		String sql = "select  category_id, count(category_id) file_id from salontest.file where user_id="+fileDetail.getUsers().getUser_id() +" group by category_id";	
+		String sql = "select  category_id, count(category_id) file_id from salontest.file where user_id="+fileDetail.getUsers().getUserId() +" group by category_id";	
 	
 		try {
-			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
+			Session session = sessionFactory.getCurrentSession();
+			
 			
 			@SuppressWarnings("unchecked")
 			List<CategoryCountMap> results = session.createSQLQuery(sql)
@@ -167,8 +149,6 @@ public class FileDetailDAO {
 					                         .addScalar("file_id", StandardBasicTypes.INTEGER)
 					                         .setResultTransformer( Transformers.aliasToBean(CategoryCountMap.class))
 											 .list();
-			 transaction.commit();
-			 session.close();
 			 
 			 System.out.println(results.size());
 			if(results.size()>0)
@@ -180,65 +160,6 @@ public class FileDetailDAO {
 			throw re;
 		}
 		
-		/*
-		 try {
-				 session = sessionFactory.openSession();
-			
-				 Criteria criteria =  session.createCriteria(FileDetail.class)
-						                     .add(Restrictions.eq("users",fileDetail.getUsers()))
-						                     .setProjection(Projections.projectionList()
-						                     .add(Projections.groupProperty.("category"), "categoryId" )
-						                     .add(Projections.count("fileId"), "count" ))
-						                     .setResultTransformer(Transformers.aliasToBean(CategoryCountMap.class));
-				                              
-				 List<CategoryCountMap> objectList = (List<CategoryCountMap>) criteria.list();
-				 System.out.println(objectList.size());
-				 System.out.println(objectList.get(0).toString());
-				 
-				                       
-			}catch (RuntimeException re) {
-				log.error("finding Category Wise FileCount of a User", re);
-				throw re;
-			}*/
 		 
 	 }
-	 
-	 
-	 
-	 /*public List findByExample(FileDetail instance) {
-			log.debug("finding User instance by example");
-			try {				
-				 session = sessionFactory.openSession();
-				 transaction = session.beginTransaction();
-				 List results = session.createCriteria("SpringMy.Maven.db.enities.FileDetail").add(Example.create(instance)).list();
-				 log.debug("find by example successful, result size: " + results.size());
-				 transaction.commit();
-				 session.close();
-				return results;
-			} catch (RuntimeException re) {
-				log.error("find by example failed", re);
-				throw re;
-			}
-		}*/
-	 
-	 
-	 /*public String getoriginalFileName(File file){
-		 log.debug("File instance"); 
-		 try {	 
-			   session = sessionFactory.openSession();
-			   Criteria criteria = session.createCriteria(File.class);
-			                     criteria.add(Restrictions.eq("users",file.getUsers()));
-			                     criteria.add(Restrictions.eq("category", file.getCategory()));
-			                     criteria.add(Restrictions.eq("titel", file.getTitel()));
-			                     criteria.setProjection(Property.forName("originalFileName"));
-			                     
-			                     String result = (String) criteria.uniqueResult();  
-			                     session.close();
-			                     return result;
-		 } catch (RuntimeException re) {
-	         log.error("get file_id failed", re);
-	         throw re;
-          }		 
-	 }*/
-
 }

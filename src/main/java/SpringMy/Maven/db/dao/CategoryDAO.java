@@ -5,20 +5,19 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import SpringMy.Maven.db.enities.Category;
-
+@Repository
 public class CategoryDAO {
 	
 	
-	private static final Log log = LogFactory.getLog(UsersDAO.class);
-
+	 private static final Log log = LogFactory.getLog(UsersDAO.class);
+     @Autowired
 	 private SessionFactory sessionFactory;
-	 private Transaction transaction;
-	 private Session session;
 	 
 	 public void setSessionFactory(SessionFactory sessionFactory) {
 	        this.sessionFactory = sessionFactory;
@@ -28,7 +27,7 @@ public class CategoryDAO {
 	 public Integer getCategoryID(String categoryName){
 	 log.debug("categoryName instance");
 	  try {	 
-		   session = sessionFactory.openSession();
+		    Session session = sessionFactory.getCurrentSession();
 		   Criteria criteria = session.createCriteria(Category.class);
 		                     criteria.add(Restrictions.eq("categoryName", categoryName));
 		                     criteria.setProjection(Property.forName("categoryId")).uniqueResult();
@@ -36,8 +35,6 @@ public class CategoryDAO {
 		   Integer id = (Integer) criteria.list().get(0);            
 		   		   
 		   System.out.println("value of Category="+id); 
-		   
-		   session.close();                 
 		   return id;
 	      } catch (RuntimeException re) {
 	         log.error("categoryName failed", re);
