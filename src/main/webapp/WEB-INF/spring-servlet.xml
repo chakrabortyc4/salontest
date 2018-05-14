@@ -18,7 +18,7 @@
     
     <!-- Hibernate data -->
     
-    <bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/salontest?autoReconnect=true"/>
         <property name="username" value="root"/>
@@ -30,12 +30,12 @@
     
     <!-- SessionFactory & DataSource for HibernateDaoSupport Object in Spring -->
 			
-	<bean id="mySessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="dataSource" ref="myDataSource" />
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
 			    <value>SpringMy.Maven.db.enities.Category</value>
-			    <value>SpringMy.Maven.db.enities.FileDetail</value>
+			    <value>SpringMy.Maven.db.enities.File</value>
 			    <value>SpringMy.Maven.db.enities.Users</value>	
 		        <value>SpringMy.Maven.db.enities.PayStatus</value>	 
 		        <value>SpringMy.Maven.db.enities.DiscountData</value>	        		          
@@ -45,44 +45,24 @@
            <props>
             <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
             <!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> -->
-            <prop key="hibernate.jdbc.lob.non_contextual_creation">true</prop>
+         <!--    <prop key="hibernate.jdbc.lob.non_contextual_creation">true</prop> -->
 	        <prop key="hibernate.show_sql">false</prop>
 	        <prop key="hibernate.format_sql">true</prop>
-	        <prop key="hibernate.use_sql_comments">true</prop>
+	     <!--    <prop key="hibernate.use_sql_comments">true</prop> -->
 	        <!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
 	        
-	        <prop key="hibernate.search.autoregister_listeners">false</prop>
-	        <prop key="current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</prop>
-	        <prop key="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
-			<prop key="c3p0.min_size">5</prop>
-			<prop key="c3p0.max_size">20</prop>
-			<prop key="c3p0.timeout">1800</prop>
-			<prop key="c3p0.max_statements">0</prop>
-			<prop key="c3p0.acquire_increment">1</prop>
-			<prop key="c3p0.idle_test_period">60</prop>
 			
 		
 	        </props>
         </property>
     </bean>
-	 
-    <!-- DB Daos -->
+     <bean id="transactionManager"  class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
     
-   <!--  <bean id="usersDAO" class="SpringMy.Maven.db.dao.UsersDAO" >
-	<property name="sessionFactory" ref="mySessionFactory"/>
-	</bean>  -->
-    <bean id="fileDetailDAO" class="SpringMy.Maven.db.dao.FileDetailDAO" >
-	<property name="sessionFactory" ref="mySessionFactory"/>
-	</bean>
-	<bean id="categoryDAO" class="SpringMy.Maven.db.dao.CategoryDAO" >
-	<property name="sessionFactory" ref="mySessionFactory"/>
-	</bean>
-	<bean id="payStatusDAO" class="SpringMy.Maven.db.dao.PayStatusDAO" >
-	<property name="sessionFactory" ref="mySessionFactory"/>
-	</bean>
-	<bean id="discountDataDAO" class="SpringMy.Maven.db.dao.DiscountDataDAO" >
-	<property name="sessionFactory" ref="mySessionFactory"/>
-	</bean>
+    <bean id="persistenceExceptionTranslationPostProcessor"
+        class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	 
     
     <!-- Mail sender bean   -->   
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -141,28 +121,11 @@
      </bean>
    
    
-    <!-- Common Utillity bean -->   
-     <bean id="commonUtil" class="SpringMy.Maven.Utility.CommonUtil" >
-     <property name="mailSender" ref="mailSender"/>
-     <property name="lastIdProperty" ref="lastIdProperty"/>
-     </bean>
      
      <!-- SelectData bean -->   
      <bean id="selectData" class="SpringMy.Maven.Utility.SelectData"></bean>
     
-    <!-- Common Service bean -->   
-     <bean id="commonServices" class="SpringMy.Maven.Services.CommonServices" >  
-     <property name="commonUtil" ref="commonUtil"/>     
-     </bean>
      
-     <!-- Common DB-Service bean -->   
-     <bean id="dbServices" class="SpringMy.Maven.Services.DbServices" >
-     <property name="categoryDAO" ref="categoryDAO"/>
-     <property name="fileDetailDAO" ref="fileDetailDAO"/>
-     <property name="usersDAO" ref="usersDAO"/>
-     <property name="payStatusDAO" ref="payStatusDAO"/>
-     <property name="commonUtil" ref="commonUtil"/>
-     </bean>
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
         <property name="prefix" value="/WEB-INF/views/" />  
