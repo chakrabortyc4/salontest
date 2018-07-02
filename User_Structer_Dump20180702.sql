@@ -53,3 +53,10 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2018-07-02  9:47:27
+
+
+
+
+ALTER TABLE `salontest`.`users` 
+ADD COLUMN `forget_passw_auth_token` VARCHAR(200) NULL DEFAULT NULL AFTER `state`;
+
